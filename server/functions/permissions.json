@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "tube-hunt",
+  "private_key_id": "477ec3705ee020895b17db67c66f92ce99514f52",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDerLucs+jB+B3S\ngbUbEj0FrV4Cv9PIeaZY31rzU6CzZ1bf6Om6ROHnsz8h6TsVOxLs3Ix2xYcRVmWy\ndyz5eSzSPICH+xBKAsG1pvdpBq/zXvCQx4bVd9W2R7v/utdBKuZpqZRmrqnVz21C\n+tJMNUA3V+dn9Y8M0JqVn2lg3OiAuwIR6yxEqRA0B0Sxo4Z3ZpG9q+AHwL24q+q8\nruS0rNAiB3iIvNHx45O0kCzeG4W3sMh7SxsRVY/OncfQNy5VEYvHmMGKI0kEQAwM\nNJcJTjPcyIiYev4JVXXRjuCsatQPhsJjmrSF6sMoPFZXjx55QEFgyLmCq2w4Ient\nzv9XD8lTAgMBAAECggEALOfXw//SKj/fv8KRo953OOxf/5zw2EaUIesVO+n7CAMI\nlYoyjHJ0vlW7HxsaY6swo1zM5Ozr0rbCNo3rH3ps7A7wervKaqqIpxn/XgpPtHxK\ndmAOlIEgs6xewPFMlKNSqS9eMqD5thkpNy8+9shsZVzQWXo/eX2eFxt5VGPobYEo\n1LzHDgH4aV76IWDQjqCoUYSHH/VZvKKNWFd/s2mS2xegx4D++lsL8SZoG0p7mU3t\n/UtBED3APZOq/EQllE2MDcrCBZftiw/4WBws/tie6XfPuzfRkopBVJGQ/VQwC427\nBRKrF/KLa2Gsu6GQpLAkfQxvwJ5sJ24gVf6edGSpBQKBgQD0C1250YSRi1rCnZzf\nEnY7igQqFPeC3H9HeH1NfCWcu5sBZNMFHtc30xCmXq57nflMpJPyIXY/J5x1zJmK\nSXt2rkHhIUaFMgiSwWOUtSyJEwkWoH7aOASaoEWbBfy04f3suI/dZjU1ZNxs/D1r\n6DheAhfbQwiiYnHboIiYsP+/nQKBgQDplV0JVZzoggEddI5cBKNX1cratl9SeNc/\nJ++xrnwE7cyNKT6LAkpie2wwfgoNdxj+tLoAFhohryHtl9IY1gRPAgWYW2u1+08v\nJLTEF+E1mXlhiudA89OL2QynRBE3oxz0Gg5pK1t/LeCVGidSKJLzH5rqmvrqVwiI\nGKruS23xrwKBgFB6XxIkEb+dYPTE3TKC+BJyVSU7fNPeuupqxYeD5TNmeptfEGej\n3/080UTL/GYvlkK8Ez3J4yC4g1QlgIyl5t0gYgFH4+WQtlsPAzPK+0DI0jpv+uUj\njAEh0VJqCwfrbr1dr7OnPOy6siYOmIK5Nb1qm0tnM7W5GSsAKYuQ8wXRAoGAHVud\nhufQwdRdKYOVxPD8SrTfOyAC2Q3BF/oAAVgJ1GDC/db6OmR+TuRuU6Xzw399j73N\nRueAP02QuRkE2gREJF3/sAeFgSjl6en2IlNSBfeVLvJTYHGE3CXalkdS1qhUokWI\nHCXL6S8t8++Gk6fv2EjXorb55Gwt8VUQXsTyO5cCgYEAwfDYMjKodXPQalUx4hmX\nTw1eNVEPQFtaAqpwhYAWaEy1xFpvjJyg4UkQhKDA90hbfDlKUIm3OkDXOJBfCsTB\nFAOzARs5fAF+SDTYt/ZLEEL74XhcCiXk8VXnaXc3QSYOjHJPZLWTDbnUHYspr5Ny\nxCPen+zJOTeE0hKBI1BgzIU=\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-6afyf@tube-hunt.iam.gserviceaccount.com",
+  "client_id": "109217312953040447523",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-6afyf%40tube-hunt.iam.gserviceaccount.com"
+}
