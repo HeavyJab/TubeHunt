@@ -17,6 +17,40 @@ admin.initializeApp({
 
 const db = admin.firestore();
 
+app.get('/api/:channelId/upvote', (req, res) => {
+    (async () => {
+        try {
+            const channelId = req.params.channelId;
+            const channelSnapshot = await db.collection(`channels`)
+            .doc(`/${channelId}/`)
+            .update({upvotesCount: admin.firestore.FieldValue.increment(1)})
+            
+            return res.status(200).send('Upvoted!');
+
+        } catch(error) {
+            console.log(error);
+            return res.status(500).send(error);
+        }
+    })()
+});
+
+app.get('/api/:channelId/downvote', (req, res) => {
+    (async () => {
+        try {
+            const channelId = req.params.channelId;
+            const channelSnapshot = await db.collection(`channels`)
+            .doc(`/${channelId}/`)
+            .update({upvotesCount: admin.firestore.FieldValue.increment(-1)})
+            
+            return res.status(200).send('Upvoted!');
+
+        } catch(error) {
+            console.log(error);
+            return res.status(500).send(error);
+        }
+    })()
+});
+
 // submit channels
 app.post('/api/channel/submit', (req, res) => {
     (async () => {
@@ -36,7 +70,10 @@ app.post('/api/channel/submit', (req, res) => {
                 subscribe: $('link[itemprop="url"]').attr('href') + '?sub_confirmation=1',
                 isFamilyFriendly: $('meta[itemprop="isFamilyFriendly"]').attr('content'),
                 imgSrc:$('link[rel="image_src"]').attr('href'),
-                dateSubmitted: Date.now()
+                dateSubmitted: Date.now(),
+                upvotesCount: 0,
+                upvotes: []
+                
             }
 
             // get top 20 videos
@@ -73,7 +110,6 @@ app.get('/api/channels', (req, res) => {
         
     })();
 });
-
 
 
 // get videos by channels
