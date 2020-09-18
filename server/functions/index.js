@@ -18,39 +18,39 @@ admin.initializeApp({
 const db = admin.firestore();
 
 // add authentication middleware
-app.get('/api/:channelId/upvote', (req, res) => {
-    (async () => {
-        try {
-            const channelId = req.params.channelId;
-            const channelSnapshot = await db.collection(`channels`)
-            .doc(`/${channelId}/`)
-            .update({upvotesCount: admin.firestore.FieldValue.increment(1)})
-            
-            return res.status(200).send('Upvoted!');
+app.get("/api/:channelId/upvote", (req, res) => {
+  (async () => {
+    try {
+      const channelId = req.params.channelId;
+      const channelSnapshot = await db
+        .collection(`channels`)
+        .doc(`/${channelId}/`)
+        .update({ upvotesCount: admin.firestore.FieldValue.increment(1) });
 
-        } catch(error) {
-            console.log(error);
-            return res.status(500).send(error);
-        }
-    })()
+      return res.status(200).send("Upvoted!");
+    } catch (error) {
+      console.log(error);
+      return res.status(500).send(error);
+    }
+  })();
 });
 
 // add authentication middleware
-app.get('/api/:channelId/downvote', (req, res) => {
-    (async () => {
-        try {
-            const channelId = req.params.channelId;
-            const channelSnapshot = await db.collection(`channels`)
-            .doc(`/${channelId}/`)
-            .update({upvotesCount: admin.firestore.FieldValue.increment(-1)})
-            
-            return res.status(200).send('Downvoted!');
+app.get("/api/:channelId/downvote", (req, res) => {
+  (async () => {
+    try {
+      const channelId = req.params.channelId;
+      const channelSnapshot = await db
+        .collection(`channels`)
+        .doc(`/${channelId}/`)
+        .update({ upvotesCount: admin.firestore.FieldValue.increment(-1) });
 
-        } catch(error) {
-            console.log(error);
-            return res.status(500).send(error);
-        }
-    })()
+      return res.status(200).send("Downvoted!");
+    } catch (error) {
+      console.log(error);
+      return res.status(500).send(error);
+    }
+  })();
 });
 
 // submit channels
@@ -60,22 +60,22 @@ app.post("/api/channel/submit", (req, res) => {
       const { url } = req.body;
       const { data } = await axios.get(url);
       const $ = cheerio.load(data);
-
-            // getting metadata
-            const metadata =  
-            {
-                title: $('meta[name="title"]').attr('content'),
-                keywords: $('meta[name="keywords"]').attr('content').split(' '),
-                desc: $('meta[name="description"]').attr('content'),
-                channelId: $('meta[itemprop="channelId"]').attr('content'),
-                subscribe: $('link[itemprop="url"]').attr('href') + '?sub_confirmation=1',
-                isFamilyFriendly: $('meta[itemprop="isFamilyFriendly"]').attr('content'),
-                imgSrc:$('link[rel="image_src"]').attr('href'),
-                dateSubmitted: Date.now(),
-                upvotesCount: 0,
-                upvotes: []
-                
-            }
+      // getting metadata
+      const metadata = {
+        title: $('meta[name="title"]').attr("content"),
+        keywords: $('meta[name="keywords"]').attr("content").split(" "),
+        desc: $('meta[name="description"]').attr("content"),
+        channelId: $('meta[itemprop="channelId"]').attr("content"),
+        subscribe:
+          $('link[itemprop="url"]').attr("href") + "?sub_confirmation=1",
+        isFamilyFriendly: $('meta[itemprop="isFamilyFriendly"]').attr(
+          "content"
+        ),
+        imgSrc: $('link[rel="image_src"]').attr("href"),
+        dateSubmitted: Date.now(),
+        upvotesCount: 0,
+        upvotes: [],
+      };
 
       // get top 20 videos
       await db
