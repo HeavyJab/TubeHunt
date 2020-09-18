@@ -153,7 +153,7 @@ let first_load = true;
 
   //   This is the function to inject channel HTML on the Home Page
   const inject = () => {
-    console.log(channels);
+    // console.log(channels);
     let mainPage = document.querySelector("#contents");
     mainPage.prepend(channelSection);
     first_load = false;
