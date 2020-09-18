@@ -9,11 +9,6 @@ document.addEventListener(
       e.preventDefault();
       if (url.value) {
         console.log(url.value);
-        // let sendbody = JSON.stringify({
-        //   url: `${url.value}`,
-        // });
-        // let data = new FormData();
-        // data.append("url", url.value);
         const myHeaders = new Headers({
           "Content-type": "application/x-www-form-urlencoded; charset=UTF-8",
         });
