@@ -1,8 +1,8 @@
-$(document).ready(function() {
-    console.log("Test");
-    document.getElementById("newDetails").addEventListener("click", testClick);
-  });
-  
-  function testClick() {
-    $('.title').html("The New Title");
-  }
+document.addEventListener('DOMContentLoaded', function() {
+  let form = document.getElementById('form');
+    form.addEventListener('submit', function(e){
+        e.preventDefault();
+        let value = e.target.children.code.value
+        console.log(code)
+    })
+}, false);

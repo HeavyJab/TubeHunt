@@ -8,7 +8,7 @@ const app = express();
 const YouTubeAPI = require("./YouTubeAPI.json");
 app.use( cors({origin: true}))
 
-const serviceAccount = require("./permissions.json");
+const serviceAccount = require("./permission.json");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -17,6 +17,7 @@ admin.initializeApp({
 
 const db = admin.firestore();
 
+// add authentication middleware
 app.get('/api/:channelId/upvote', (req, res) => {
     (async () => {
         try {
@@ -34,6 +35,7 @@ app.get('/api/:channelId/upvote', (req, res) => {
     })()
 });
 
+// add authentication middleware
 app.get('/api/:channelId/downvote', (req, res) => {
     (async () => {
         try {
@@ -42,7 +44,7 @@ app.get('/api/:channelId/downvote', (req, res) => {
             .doc(`/${channelId}/`)
             .update({upvotesCount: admin.firestore.FieldValue.increment(-1)})
             
-            return res.status(200).send('Upvoted!');
+            return res.status(200).send('Downvoted!');
 
         } catch(error) {
             console.log(error);
