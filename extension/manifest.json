@@ -7,6 +7,7 @@
             "matches": [
                 "https://www.youtube.com/*"
             ],
+            "css": ["channel.css"],
             "js": [
                 "jquery.min.js",
                 "content.js",
@@ -24,6 +25,7 @@
         "default_popup": "popup.html"
     },
     "permissions":[
-        "https://us-central1-tube-hunt.cloudfunctions.net/app/api/*"
+        "https://us-central1-tube-hunt.cloudfunctions.net/app/api/*",
+        {"web_accessible_resources": ["channel.css"]}
     ]
 }
