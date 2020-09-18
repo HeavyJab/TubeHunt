@@ -1,5 +1,5 @@
 const cheerio = require('cheerio');
-const axio = require('axio')
+const axios = require('axios')
 
 async function fetchHTML(url) {
     const { data } = await axios.get(url)

@@ -1,7 +1,9 @@
 let channels;
 
-fetch('https://us-central1-tube-hunt.cloudfunctions.net/app/api/channels').then(r => r.json()).then(result => {
-    console.log(result)
+fetch("https://us-central1-tube-hunt.cloudfunctions.net/app/api/channels")
+  .then((r) => r.json())
+  .then((result) => {
+    console.log(result);
     $("#contents").prepend(`
 
     <div style="padding: 10px">
@@ -15,7 +17,9 @@ fetch('https://us-central1-tube-hunt.cloudfunctions.net/app/api/channels').then(
             <div class="card-body">
             <h5 class="card-title">${result[0].title}</h5>
             <p class="card-text">${result[0].desc}</p>
-            <a href=${'channel/' + result[0].channelId} class="btn btn-primary">Go somewhere</a>
+            <a href=${
+              "channel/" + result[0].channelId
+            } class="btn btn-primary">Go somewhere</a>
             </div>
             </div>
             <div class="card" style="width: 18rem; padding:10px">
@@ -34,8 +38,6 @@ fetch('https://us-central1-tube-hunt.cloudfunctions.net/app/api/channels').then(
 
     <hr style="width:100%;text-align:left;margin-left:0">
 `);
-})
+  });
 
-
-
-console.log('loaded the script!')
+console.log("loaded the script!");
