@@ -94,7 +94,7 @@ app.post("/api/channel/submit", (req, res) => {
 app.get("/api/channels", (req, res) => {
   (async () => {
     try {
-      const channelSnapshot = await db.collection("channels").orderBy("dateSubmitted").get();
+      const channelSnapshot = await db.collection("channels").orderBy("dateSubmitted", 'desc').get();
       const channels = [];
       channelSnapshot.forEach((doc) => {
         channels.push(doc.data());
