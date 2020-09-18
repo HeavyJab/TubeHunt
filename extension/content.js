@@ -1,10 +1,10 @@
 let first_load = true;
 
 (async () => {
-  const channelCard = document.createElement("div");
-  channelCard.className = "style-scope ytd-rich-grid-renderer";
+  const channelSection = document.createElement("div");
+  channelSection.className = "style-scope ytd-rich-grid-renderer";
   let ytStyle = "style-scope ytd-rich-shelf-renderer"; // don't use this yet
-  channelCard.innerHTML = `
+  channelSection.innerHTML = `
     <div id="content" class="style-scope ytd-rich-section-renderer">
         <div class="style-scope ytd-rich-section-renderer">
             <div id="dismissable" class="style-scope ytd-rich-shelf-renderer">
@@ -155,7 +155,7 @@ let first_load = true;
   const inject = () => {
     console.log(channels);
     let mainPage = document.querySelector("#contents");
-    mainPage.prepend(channelCard);
+    mainPage.prepend(channelSection);
     first_load = false;
   };
 
