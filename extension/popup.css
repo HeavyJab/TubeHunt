@@ -1,6 +1,6 @@
 /* HTML Styles that apply across the popup */
 body {
-  width: 20rem;
+  width: 22.5rem;
   height: 7.5rem;
 }
 .container-fluid {
@@ -12,6 +12,16 @@ button {
   background-color: rgb(30, 123, 211);
   border: none;
   padding: 0.5rem;
+}
+
+button:hover {
+  cursor: pointer;
+  background-color: rgb(29, 110, 185);
+
+}
+
+button:focus {
+  outline: none;
 }
 
 a {

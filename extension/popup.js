@@ -1,11 +1,12 @@
 document.addEventListener(
   "DOMContentLoaded",
   function () {
-    let btn = document.getElementById("newDetails");
-    let getChannels = document.getElementById("getChannels");
+    let submitChannel = document.getElementById("submitChannel");
+    let darkMode = document.getElementById("darkMode");
+    // let getChannels = document.getElementById("getChannels");
     let url = document.getElementById("url");
     let messageTag = document.getElementById("message");
-    btn.addEventListener("click", function (e) {
+    submitChannel.addEventListener("click", function (e) {
       e.preventDefault();
       if (url.value) {
         console.log(url.value);
@@ -43,25 +44,28 @@ document.addEventListener(
           });
       }
     });
-
-    getChannels.addEventListener("click", function (e) {
-      e.preventDefault();
-      const baseURL =
-        "https://us-central1-tube-hunt.cloudfunctions.net/app/api/channels";
-      fetch(baseURL, {
-        method: "GET",
-      })
-        .then((res) => {
-          return res.text();
-        })
-        .then((text) => {
-          let jsonData = JSON.parse(text);
-          for (let i = 0; i < jsonData.length; i++) {
-            let item = jsonData[i];
-            console.log(item);
-          }
-        });
+    darkMode.addEventListener("click", function () {
+      console.log("Made dark!");
     });
+    // Removed For now since button is no longer required
+    // getChannels.addEventListener("click", function (e) {
+    // e.preventDefault();
+    //   const baseURL =
+    //     "https://us-central1-tube-hunt.cloudfunctions.net/app/api/channels";
+    //   fetch(baseURL, {
+    //     method: "GET",
+    //   })
+    //     .then((res) => {
+    //       return res.text();
+    //     })
+    //     .then((text) => {
+    //       let jsonData = JSON.parse(text);
+    //       for (let i = 0; i < jsonData.length; i++) {
+    //         let item = jsonData[i];
+    //         console.log(item);
+    //       }
+    //     });
+    // });
   },
   false
 );
