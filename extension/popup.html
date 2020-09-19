@@ -2,20 +2,39 @@
 <html>
   <head>
     <title>Tube Hunt: Community Curated YouTube Recommendations</title>
+    <link rel="stylesheet" href="./popup.css" />
     <script src="popup.js"></script>
   </head>
-  <body style="width: 15rem; height: 15rem">
-    <div class="container-fluid" style="padding: 10px">
-      <a
-        href="https://www.reddit.com/r/TubeHunt/"
-        target="_blank"
-        class="badge badge-secondary"
-        >/r/TubeHunt</a
-      >
-      <input id="url" name="url" />
-      <button type="submit" id="newDetails">Submit</button>
-      <button type="button" id="getChannels">Get Channels</button>
-      <p id="message"></p>
+  <body>
+    <div class="container-fluid">
+      <header>
+        <a
+          target="_blank"
+          href="https://www.reddit.com/r/TubeHunt/"
+          class="popup-title"
+          >Tube Hunt</a
+        >
+        <!-- class="badge badge-secondary" -->
+      </header>
+      <main>
+        <input id="url" placeholder="Enter Channel here" name="url" />
+        <button type="submit" id="newDetails">Submit</button>
+        <!-- <button type="button" id="getChannels">Get Channels</button> -->
+        <p id="message"></p>
+      </main>
+      <footer>
+        <ul class="footer-nav">
+          <li class="footer-nav-item">
+            <a href="#">Site</a>
+          </li>
+          <li class="footer-nav-item">
+            <a href="#">Settings</a>
+          </li>
+          <li>
+            <a href="#" class="footer-nav-item"> Help</a>
+          </li>
+        </ul>
+      </footer>
     </div>
   </body>
 </html>
