@@ -4,9 +4,6 @@
   );
   const channels = await res.json();
 
-//   order channels by submission time
-  
-
   const channelCard = document.createElement("div");
   channelCard.setAttribute("id", "channel-section")
 
@@ -15,29 +12,33 @@
 
     <div id="channel-card">
     <div id="header">
-        <span>Submitted at ${new Date(channel.dateSubmitted).toDateString()}</span>
-        <a href="https://www.reddit.com/r/TubeHunt/" target="_blank">
-            <span>r/TubeHunt</span>
-        </a>
+        <div id=channel-title>
+            <a href="${'/channel/' + channel.channelId}" id='profile-link' target="_blank">
+                <div id=channel-profile> 
+                    <img id="channel-profile" src="${channel.imgSrc}">
+                    <h3>
+                        ${channel.title}
+                    </h3>
+                </div>
+            </a>
+        </div>
+        <div id="submission-time">
+        <p>${new moment(channel.dateSubmitted).fromNow()}</p>
     </div>
-    <div id=channel-title>
-        <a href="${'/channel/' + channel.channelId}" id='profile-link' target="_blank">
-            <div id=channel-profile> 
-                <img id="channel-profile" src="${channel.imgSrc}">
-                <h2>
-                    ${channel.title}
-                </h2>
-            </div>
-        </a>
     </div>
+    
 
     <p id="channel-desc">
         ${channel.desc}
     </p>
 
+
     <div id="channel-footer"> 
         <div id="voting">
-            <button id="upvote" class="voting" name=${channel.channelId}>👏</button>
+            <div>
+                <button id="upvote" class="voting" name=${channel.channelId}>👏</button>
+                <span id="upvotesCount-${channel.channelId}">${channel.upvotesCount}</span>
+            </div>
             <a href="https://www.youtube.com/channel/${channel.channelId}?sub_confirmation=1">
             <button id="subscribe" class="voting" name=${channel.channelId}>🍿</button>
             </a>
@@ -67,29 +68,28 @@
         mainPage.prepend(channelCard);
     
         window.onclick = async (event) => {
-        const target = event.target;
-        if (target.matches("#upvote")) {
-            const channelId = document.activeElement.getAttribute("name");
-            const res = await fetch(
-            `https://us-central1-tube-hunt.cloudfunctions.net/app/api/${channelId}/upvote`,
-            {
-                method: "get",
-            }
-            );
-            console.log('Upvoted!')
-        } else if ((target.matches("#subscribe"))) {
-            const channelId = document.activeElement.getAttribute("name");
-            const res = await fetch(
-            `https://www.youtube.com/channel/${channelId}?sub_confirmation=1`,
-            {
-                method: "get",
-            }
-            );
-            console.log('Subscribe page called!')
-        };
-    };
+            const target = event.target;
+            if (target.matches("#upvote")) {
+                const channelId = document.activeElement.getAttribute("name");
 
-    observe();
+                // change the view
+                let upvotesCount = document.getElementById(`upvotesCount-${channelId}`).innerText;
+                const upvotesElm = document.getElementById(`upvotesCount-${channelId}`);
+                upvotesCount = parseInt(upvotesCount) + 1
+                upvotesElm.innerHTML = upvotesCount;
+
+                // change model
+                const res = await fetch(
+                `https://us-central1-tube-hunt.cloudfunctions.net/app/api/${channelId}/upvote`,
+                {
+                    method: "get",
+                }
+                );
+                console.log('Upvoted!')
+            }
+        };
+
+        observe();
     })();
 
 })();
