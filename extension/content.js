@@ -23,7 +23,7 @@
             </a>
         </div>
         <div id="submission-time">
-        <p>${new moment(channel.dateSubmitted).fromNow()}</p>
+        <span>${new moment(channel.dateSubmitted).fromNow()}</span>
     </div>
     </div>
     
@@ -31,7 +31,13 @@
     <p id="channel-desc">
         ${channel.desc}
     </p>
-
+    <div id="keywords">
+        <span>${channel.keywords[0]}</span>
+        <span>${channel.keywords[1]}</span>
+        <span>${channel.keywords[2]}</span>
+        <span>${channel.keywords[3]}</span>
+        <span>${channel.keywords[4]}</span>
+    </div>
 
     <div id="channel-footer"> 
         <div id="voting">
