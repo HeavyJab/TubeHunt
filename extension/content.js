@@ -13,8 +13,6 @@
 
   channels.forEach((channel) => {
     channelCard.innerHTML += `
-  console.log(channels);
-
     <div id="channel-card">
     <div id="header">
         <div id=channel-title>

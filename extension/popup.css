@@ -49,11 +49,13 @@ header {
 
 /* Main */
 main {
+  display:flex;
 }
 
 #url {
   border: none;
   border-bottom: 1px solid black;
+  min-width: 80%;
 }
 
 #url:focus {
