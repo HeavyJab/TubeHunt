@@ -39,7 +39,11 @@
   richShelf.classList.add("style-scope", "ytd-rich-shelf-renderer");
   let richHeader = ce("h2");
   richHeader.setAttribute("id", "rich-header");
-  richHeader.classList.add("style-scope", "ytd-rich-shelf-renderer");
+  richHeader.classList.add(
+    "style-scope",
+    "ytd-rich-shelf-renderer",
+    "heading-text"
+  );
   richHeader.textContent = "Tube Hunt";
   richShelf.appendChild(richHeader);
   // Put Cards In here

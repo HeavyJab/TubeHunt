@@ -3,8 +3,8 @@
   --ytd-rich-grid-posts-per-row: 3;
   --ytd-rich-grid-movies-per-row: 6;
   --yt-spec-text-primary: #fff;
-  --yt-spec-10-percent-layer: rgba(255, 255, 255, 0.1);
   --yt-spec-brand-background-solid: #212121;
+  --yt-spec-10-percent-layer: rgba(255, 255, 255, 0.1);
   --ytd-rich-grid-item-margin: 16px;
 }
 
@@ -12,6 +12,7 @@
   width: 100%;
   margin-left: calc(var(--ytd-rich-grid-item-margin) / 2);
   margin-right: calc(var(--ytd-rich-grid-item-margin) / 2);
+  margin-bottom: 20px;
 }
 
 .rich-shelf {
@@ -30,7 +31,7 @@
 }
 
 #rich-header {
-  color: #fff;
+  color: var(--yt-spec-text-primary);
   font-size: 2rem;
   font-weight: 500;
   line-height: 2.4rem;
@@ -50,6 +51,7 @@
   -ms-flex-direction: column;
   -webkit-flex-direction: column;
   flex-direction: column;
+  margin-bottom: 20px;
 }
 
 .ytd-post-renderer[fit] {
@@ -64,10 +66,6 @@
 .ytd-rich-item-renderer {
   margin-left: calc(var(--ytd-rich-grid-item-margin) / 2);
   margin-right: calc(var(--ytd-rich-grid-item-margin) / 2);
-}
-
-#contents .ytd-rich-shelf-renderer {
-  margin-bottom: 20px;
 }
 
 .ytd-rich-shelf-renderer[is-show-more-hidden] {
