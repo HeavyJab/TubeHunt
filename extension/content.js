@@ -49,12 +49,21 @@
   // Put Cards In here
   let contents = ce("div");
   contents.setAttribute("id", "contents");
-  contents.classList.add(
-    "style-scope",
-    "ytd-rich-shelf-renderer",
-    "scroll-through"
-  );
-
+  contents.classList.add("style-scope", "ytd-rich-shelf-renderer", "hide-me");
+  let revealBtn = ce("button");
+  revealBtn.setAttribute("id", "reveal-btn");
+  window.onclick = (event) => {
+    let target = event.target;
+    console.log(target);
+    if (target.matches("reveal-btn")) {
+      console.log("Clicked Button!");
+    }
+  };
+  // revealBtn.onclick(function (e) {
+  //   e.preventDefault();
+  //   console.log("Reveal Additional Content");
+  // });
+  revealBtn.textContent = "More...";
   channels.sort((a, b) => {
     return b.upvotesCount - a.upvotesCount;
   });
@@ -343,6 +352,7 @@
 
   dismiss.appendChild(richShelf);
   dismiss.appendChild(contents);
+  dismiss.appendChild(revealBtn);
   subContent.appendChild(dismiss);
   content.appendChild(subContent);
   channelSection.appendChild(content);

@@ -6,6 +6,7 @@
   --yt-spec-brand-background-solid: #212121;
   --yt-spec-10-percent-layer: rgba(255, 255, 255, 0.1);
   --ytd-rich-grid-item-margin: 16px;
+  --yt-spec-badge-chip-background:rgba(255, 255, 255, 0.1);
 }
 
 .channel-section {
@@ -18,7 +19,7 @@
 .rich-shelf {
   border-top: 4px solid var(--yt-spec-10-percent-layer);
   width: 100%;
-  overflow-x: hidden;
+  overflow: hidden !important;
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
@@ -72,14 +73,25 @@
   border-bottom: 4px solid var(--yt-spec-10-percent-layer);
 }
 
-.scroll-through {
-  max-height: 400px;
+.hide-me{
+    overflow: hidden !important;
+    max-height: 220px;
 }
 
-.scroll-through::-webkit-scrollbar {
-  /* display:  */
-  width: 3px;
+#reveal-btn {
+    width:100%;
+    background-color: transparent;
+    color:var(--yt-spec-text-primary);
 }
+
+#reveal-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* .scroll-through::-webkit-scrollbar {
+  /* display:  */
+  /* width: 3px; */
+/* } */
 .scroll-through::-webkit-scrollbar-track {
   background: none;
 }
@@ -89,4 +101,4 @@
 
 .scroll-through::-webkit-scrollbar-thumb:hover {
   background: #555;
-}
+} */
