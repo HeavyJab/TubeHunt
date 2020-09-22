@@ -17,12 +17,17 @@
         }
     ],
     "background": {
-        "scripts": [
-            "background.js",
-            "authentication.js"
-        ],
-        "persistent": false
+        "persistent": false,
+        "page": "background.html"
     },
+    "oauth2": {
+      "client_id": "221785724000-g8792sv5nd156g57o98l8v6uocq9p594.apps.googleusercontent.com",
+      "scopes": [
+        "https://www.googleapis.com/auth/userinfo.email",
+        "https://www.googleapis.com/auth/userinfo.profile"
+      ]
+    },
+    "key": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAr0vrNxcH4rJJz3Iq4+EZ\nBJLYq93ohps633xYRc6dRYDka1rdnRs5Yqmlcbd8BEAkbrdOHwAejFF1w4AsctHe\nkwc4bChbY9OUTeuCOoLrUAkBqAuHDXoI0Djy56SKr+PwtNGkOJhQdbonCEwKb13g\nT6Bwy8NJI63eDzd/byYnYt+eOReEBjRKBE55UyJ8ycMJKPlFDuPkdIKcXYxhsEkY\nTIrh9g2VpRi8elLsPKswxatzMs7ODnjmdUxIOTps9yVe01PSM5724bH8IH1XUu5i\n06Ca4aX6mmGoQ1jiu5WeGbXU8dAyiVeCLg7/B2qyrSR4UfjdynqH0k5CF59BtFJ+\nmQIDAQAB\n-----END PUBLIC KEY-----",
     "icons": {
         "16": "icon128.png",
         "48": "icon128.png",
@@ -34,6 +39,7 @@
     },
     "permissions":[
         "https://us-central1-tube-hunt.cloudfunctions.net/app/api/*",
-        {"web_accessible_resources": ["channel.css"]}
+        {"web_accessible_resources": ["channel.css"]},
+        "identity"
     ]
 }
