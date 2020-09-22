@@ -2,14 +2,13 @@
 
 #channel-section {
     display: flex;
-    justify-content: space-between;
     align-items: center;
     overflow: auto;
     margin-bottom: 10px;
 }
 
 #channel-card {
-  height: 200px !important;
+  height: 220px !important;
   width: 400px !important;
   padding: 10px !important;
   flex-shrink: 0;

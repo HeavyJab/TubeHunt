@@ -50,10 +50,13 @@
                 <button id="upvote" class="voting" name=${
                   channel.channelId
                 }>👏</button>
-                <span id="upvotesCount-${channel.channelId}">${
-      channel.upvotesCount
-    }</span>
+                <span id="upvotesCount-${channel.channelId}">${channel.upvotesCount}</span>
             </div>
+
+            <button id="show" name="${channel.channelId}"> 
+                show videos!
+            </button>
+
             <a href="https://www.youtube.com/channel/${
               channel.channelId
             }?sub_confirmation=1">
@@ -66,6 +69,7 @@
     </div>
         `;
   });
+
   //   <button id="downvote" name=${channel.channelId}>👎</button>
   //   Observe DOM mutation
   const mo = new MutationObserver(() => {
@@ -76,9 +80,11 @@
   });
 
   // Inject content
-  (observe = () => {
+  observe = () => {
     mo.observe(document.body, { childList: true, subtree: true });
-  })()(
+  }
+  
+  (
     (inject = () => {
       mo.disconnect();
 
@@ -108,6 +114,25 @@
             }
           );
           console.log("Upvoted!");
+        }
+
+        // show videos
+        if(target.matches("#show")) {
+            console.log('clicked!!!!')
+            const channelId = document.activeElement.getAttribute("name");
+
+            const videos = document.createElement("div");
+            videos.setAttribute("id", `video-section`);
+            videos.innerHTML = `<h1>show videos!</h1>`
+            
+            if (document.querySelector(`#video-section`)) {
+                console.log("contains channel-section")
+                document.getElementById('video-section').remove()
+              } else {
+                console.log(`fetch channel videos by id${channelId}`)
+                console.log("set inner html")
+                mainPage.firstChild.insertAdjacentElement('afterend', videos);
+              }
         }
       };
 
