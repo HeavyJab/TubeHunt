@@ -7,8 +7,15 @@
     margin-bottom: 10px;
 }
 
+#video-section {
+    display: flex;
+    align-items: center;
+    overflow: auto;
+    margin-bottom: 10px;
+}
+
 #channel-card {
-  height: 220px !important;
+  height: 180px !important;
   width: 400px !important;
   padding: 10px !important;
   flex-shrink: 0;
@@ -100,4 +107,3 @@ a:visited {
 #voting > button:active {
     font-size:40px;
 }
-  

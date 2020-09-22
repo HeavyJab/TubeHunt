@@ -11,6 +11,8 @@
     return b.upvotesCount - a.upvotesCount;
   });
 
+  
+
   channels.forEach((channel) => {
     channelCard.innerHTML += `
     <div id="channel-card">
@@ -36,13 +38,6 @@
     <p id="channel-desc">
         ${channel.desc}
     </p>
-    <div id="keywords">
-        <span>${channel.keywords[0]}</span>
-        <span>${channel.keywords[1]}</span>
-        <span>${channel.keywords[2]}</span>
-        <span>${channel.keywords[3]}</span>
-        <span>${channel.keywords[4]}</span>
-    </div>
 
     <div id="channel-footer"> 
         <div id="voting">
@@ -71,6 +66,14 @@
   });
 
   //   <button id="downvote" name=${channel.channelId}>👎</button>
+  // <div id="keywords">
+  //       <span>${channel.keywords[0]}</span>
+  //       <span>${channel.keywords[1]}</span>
+  //       <span>${channel.keywords[2]}</span>
+  //       <span>${channel.keywords[3]}</span>
+  //       <span>${channel.keywords[4]}</span>
+  //   </div>
+
   //   Observe DOM mutation
   const mo = new MutationObserver(() => {
     if (!document.contains(channelCard)) {
@@ -123,16 +126,23 @@
 
             const videos = document.createElement("div");
             videos.setAttribute("id", `video-section`);
+            videos.setAttribute("name", `${channelId}`)
             videos.innerHTML = `<h1>show videos!</h1>`
             
             if (document.querySelector(`#video-section`)) {
                 console.log("contains channel-section")
-                document.getElementById('video-section').remove()
-              } else {
-                console.log(`fetch channel videos by id${channelId}`)
-                console.log("set inner html")
-                mainPage.firstChild.insertAdjacentElement('afterend', videos);
-              }
+                if (document.getElementById("video-section").getAttribute('name') != channelId) {
+                  document.getElementById('video-section').remove()
+                  console.log(`fetch channel videos by id${channelId}`)
+                  console.log("set inner html")
+                  mainPage.firstChild.insertAdjacentElement('afterend', videos);
+                } else {
+                  document.getElementById('video-section').remove()
+                }
+            } else {
+              console.log(`fetch channel videos by id${channelId}`)
+              console.log("set inner html")
+              mainPage.firstChild.insertAdjacentElement('afterend', videos);            } 
         }
       };
 
