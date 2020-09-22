@@ -12,6 +12,7 @@
     align-items: center;
     overflow: auto;
     margin-bottom: 10px;
+    width: 100%;
 }
 
 #channel-card {
@@ -31,7 +32,6 @@
 #channel-profile {
     display: flex;
     align-items: center;
-    margin-bottom: 5px;
 }
 
 #header {

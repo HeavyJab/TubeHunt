@@ -127,7 +127,7 @@
             const videos = document.createElement("div");
             videos.setAttribute("id", `video-section`);
             videos.setAttribute("name", `${channelId}`)
-            videos.innerHTML = `<h1>show videos!</h1>`
+            videos.innerHTML = `<h1>${channelId}</h1>`
             
             if (document.querySelector(`#video-section`)) {
                 console.log("contains channel-section")
