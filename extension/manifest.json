@@ -2,6 +2,7 @@
     "manifest_version": 2,
     "name": "Tube Hunt",
     "version": "0.1.1",
+    "content_security_policy":"script-src 'self' https://www.gstatic.com/ https://*.firebaseio.com https://www.googleapis.com; object-src 'self'",
     "content_scripts": [
         {
             "matches": [
@@ -17,8 +18,10 @@
     ],
     "background": {
         "scripts": [
-            "background.js"
-        ]
+            "background.js",
+            "authentication.js"
+        ],
+        "persistent": false
     },
     "icons": {
         "16": "icon128.png",
