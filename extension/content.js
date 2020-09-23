@@ -2,8 +2,16 @@
 
   createChannelCard = (channel) => {
     const Card = document.createElement("div");
-    Card.setAttribute("class", "channel-card");
+    Card.classList.add(
+      "channel-card",
+      "style-scope",
+      "ytd-rich-item-renderer",
+      "ytd-rich-shelf-renderer",
+      "ytd-post-renderer"
+    );
     Card.setAttribute('id', channel.channelId)
+    Card.setAttribute("is-post", "");
+
 
     Card.innerHTML = `
     <div id="header">
@@ -62,7 +70,13 @@
   
     const channelSection = document.createElement("div");
     channelSection.setAttribute("id", "channel-section");
-    channelSection.setAttribute("class", "section collapsible collapsed")
+    channelSection.classList.add(
+      "style-scope",
+      "ytd-rich-grid-renderer",
+      "section",
+      "collapsible",
+      "collapsed"
+    );
   
     channels.sort((a, b) => {
       return b.upvotesCount - a.upvotesCount;
