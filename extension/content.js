@@ -1,71 +1,86 @@
-const moment = require('moment');
-
 (async () => {
-  const res = await fetch(
-    "https://us-central1-tube-hunt.cloudfunctions.net/app/api/channels"
-  );
-  const channels = await res.json();
 
-  const channelCard = document.createElement("div");
-  channelCard.setAttribute("id", "channel-section");
+  createChannelCard = (channel) => {
+    const Card = document.createElement("div");
+    Card.setAttribute("class", "channel-card");
+    Card.setAttribute('id', channel.channelId)
 
-  channels.sort((a, b) => {
-    return b.upvotesCount - a.upvotesCount;
-  });
-
-  channels.forEach((channel) => {
-    channelCard.innerHTML += `
-    <div id="channel-card">
+    Card.innerHTML = `
     <div id="header">
-        <div id=channel-title>
-            <a href="${
-              "/channel/" + channel.channelId
-            }" id='profile-link' target="_blank">
-                <div id=channel-profile> 
-                    <img id="channel-profile" src="${channel.imgSrc}">
-                    <h3>
-                        ${channel.title}
-                    </h3>
-                </div>
-            </a>
-        </div>
-        <div id="submission-time">
-        <span>${new moment(channel.dateSubmitted).fromNow()}</span>
-    </div>
-    </div>
-    
-
-    <p id="channel-desc">
-        ${channel.desc}
-    </p>
-
-    <div id="channel-footer"> 
-        <div id="voting">
-            <div>
-                <button id="upvote" class="voting" name=${
-                  channel.channelId
-                }>👏</button>
-                <span id="upvotesCount-${channel.channelId}">${
-      channel.upvotesCount
-    }</span>
+    <div id=channel-title>
+        <a href="${"/channel/" + channel.channelId}" id='profile-link' target="_blank">
+            <div id=channel-profile> 
+                <img id="channel-profile" src="${channel.imgSrc}">
+                <h3>
+                    ${channel.title}
+                </h3>
             </div>
+        </a>
+    </div>
+    <button id="show" class="voting" name="${channel.channelId}"> 
+            📺
+        </button>
+    <div id="submission-time">
+</div>
+</div>
 
-            <button id="show" class="voting" name="${channel.channelId}"> 
-                📺
-            </button>
 
-            <a href="https://www.youtube.com/channel/${
+<p id="channel-desc">
+    ${channel.desc}
+</p>
+
+<div id="channel-footer"> 
+    <div id="voting">
+        <div>
+            <button id="upvote" class="voting" name=${
               channel.channelId
-            }?sub_confirmation=1">
-            <button id="subscribe" class="voting" name=${
-              channel.channelId
-            }>🍿</button>
-            </a>
+            }>👏</button>
+            <span style="font-size:18px" id="upvotesCount-${channel.channelId}">${
+  channel.upvotesCount
+}</span>
         </div>
+
+        <a href="https://www.youtube.com/channel/${
+          channel.channelId
+        }?sub_confirmation=1">
+        <button id="subscribe" class="voting" name=${
+          channel.channelId
+        }>🍿</button>
+        </a>
     </div>
-    </div>
-        `;
-  });
+</div>
+    `;
+
+    return Card
+  }
+
+  createChannelSection = async (videoSection) => {
+    const res = await fetch(
+      "https://us-central1-tube-hunt.cloudfunctions.net/app/api/channels"
+    );
+    const channels = await res.json();
+  
+    const channelSection = document.createElement("div");
+    channelSection.setAttribute("id", "channel-section");
+    channelSection.setAttribute("class", "section collapsible collapsed")
+  
+    channels.sort((a, b) => {
+      return b.upvotesCount - a.upvotesCount;
+    });
+
+    console.log(videoSection)
+    if(videoSection) {
+      console.log(videoSection)
+
+    } else {
+      channels.forEach((channel) => {
+        channelSection.appendChild(createChannelCard(channel))
+      });
+    }
+
+    return channelSection;
+  }
+  
 
   //   <button id="downvote" name=${channel.channelId}>👎</button>
   // <div id="keywords">
@@ -75,12 +90,17 @@ const moment = require('moment');
   //       <span>${channel.keywords[3]}</span>
   //       <span>${channel.keywords[4]}</span>
   //   </div>
+  // <span>${new moment(channel.dateSubmitted).fromNow()}</span>
+
 
   //   Observe DOM mutation
 
   let showVideos = false;
+  let channelCard = await createChannelSection(showVideos);
+  let showingChannels = false
+  let mainPage = document.querySelector("#contents");
 
-// Observer class to watch for DOM changes
+  // Observer class to watch for DOM changes
   const mo = new MutationObserver(() => {
     if (!document.contains(channelCard)) {
       console.log("Changing");
@@ -97,22 +117,38 @@ const moment = require('moment');
   observe = () => {
     mo.observe(document.body, { childList: true, subtree: true });
   };
-
-  let mainPage = document.querySelector("#contents");
   
-  // inject channel cards immediately invoked
-  (inject = () => {
+
+    // inject channel cards immediately invoked
+  (inject = async () => {
       mo.disconnect();
 
+      // const huntSection = document.createElement('div');
+      // huntSection.setAttribute('style', 'display:flex; flex-direction: column;')
+
+      const toggle = document.createElement('button');
+      toggle.setAttribute('id', 'toggle');
+
+      if(showingChannels){
+        toggle.innerHTML = 'Hunt 🎉'
+      } else {
+        toggle.innerHTML = 'Hunt🤞'
+      }
+
+      // huntSection.appendChild(toggle)
+      // huntSection.appendChild(channelCard)
+
       mainPage.prepend(channelCard);
+      mainPage.prepend(toggle)
       observe();
   })();
 
   // inject videos if videos exists
   injectVideos = (videos) => {
     mo.disconnect();
-
-    mainPage.firstChild.insertAdjacentElement("afterend", videos);
+    
+    const channelId = videos.getAttribute('name')
+    document.getElementById(channelId).insertAdjacentElement("afterend", videos);
 
     observe();
   }
@@ -141,6 +177,7 @@ const moment = require('moment');
       });
     } else {
       console.log(res.status)
+      videos.innerHTML += `<h1>${res.status}🤷‍♂️</h1>`
     }
 
     return videos;
@@ -193,6 +230,21 @@ const moment = require('moment');
         showVideos = videos
         injectVideos(videos);
       }
+    }
+
+    // toggle more channels
+    if (target.matches("#toggle")) {
+      if(showingChannels){
+        document.querySelector('.section.collapsible').classList.toggle('collapsed');
+        document.querySelector('#toggle').innerHTML = 'Hunt🤞'
+        showingChannels = false;
+
+      } else {
+        document.querySelector('#toggle').innerHTML = 'Hunt 🎉'
+        document.querySelector('.section.collapsible').classList.toggle('collapsed');
+        showingChannels = true;
+      }
+
     }
   };
 })();
