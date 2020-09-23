@@ -12,30 +12,40 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 function initApp() {
-  firebase.auth().onAuthStateChanged(function(user) {
-    if (user) {
-      var displayName = user.displayName;
-      var email = user.email;
-      var emailVerified = user.emailVerified;
-      var photoURL = user.photoURL;
-      var isAnonymous = user.isAnonymous;
-      var uid = user.uid;
-      var providerData = user.providerData;
+  firebase.auth().onAuthStateChanged(user => {
+    // firebase.User
+    // https://firebase.google.com/docs/reference/js/firebase.User
+    user ? handleSignIn(user) : handleSignOut();
 
-      document.getElementById('quickstart-button').textContent = 'Sign out';
-      document.getElementById('quickstart-sign-in-status').textContent = 'Signed in';
-      document.getElementById('quickstart-account-details').textContent = JSON.stringify(user, null, '  ');
-
-    } else {
-      document.getElementById('quickstart-button').textContent = 'Sign-in with Google';
-      document.getElementById('quickstart-sign-in-status').textContent = 'Signed out';
-      document.getElementById('quickstart-account-details').textContent = 'null';
-    }
     document.getElementById('quickstart-button').disabled = false;
   });
 
-  console.log(document.getElementById('quickstart-button'))
   document.getElementById('quickstart-button').addEventListener('click', startSignIn, false);
+}
+
+const handleSignOut = () => {
+  document.getElementById('quickstart-button').textContent = 'Sign-in with Google';
+  document.getElementById('quickstart-sign-in-status').textContent = 'Signed out';
+  document.getElementById('quickstart-account-details').textContent = 'null';
+
+  profileImage = document.getElementById('profile-image');
+  profileImage.style.display = 'hidden';
+  profileImage.src = "";
+}
+
+const handleSignIn = user => {
+  document.getElementById('quickstart-button').textContent = 'Sign out';
+  document.getElementById('quickstart-sign-in-status').textContent = 'Signed in';
+  document.getElementById('quickstart-account-details').textContent = JSON.stringify(user, null, '  ');
+
+  // Display user profile image
+  var profileImage = user.photoURL;
+
+  if(profileImage) {
+    profileImage = document.getElementById('profile-image');
+    profileImage.style.display = 'block';
+    profileImage.src = user.photoURL;
+  }
 }
 
 function startAuth(interactive) {
@@ -63,7 +73,6 @@ function startAuth(interactive) {
 }
 
 function startSignIn() {
-  console.log("startSignIn")
   document.getElementById('quickstart-button').disabled = true;
   if (firebase.auth().currentUser) {
     firebase.auth().signOut();
