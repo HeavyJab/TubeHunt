@@ -1,0 +1,31 @@
+{
+  "name": "tube-hunt-extension",
+  "version": "1.0.0",
+  "description": "",
+  "main": "popup.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "moment": "^2.29.0"
+  },
+  "devDependencies": {
+    "browserify": "^16.5.2",
+    "watchify": "^3.11.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "browserify popup.js > popup-bundle.js && browserify content.js > content-bundle.js && browserify background.js > background-bundle.js",
+    "watch-all": "watchify popup.js -o popup-bundle.js && watchify content.js -o content-bundle.js && watchify background.js -o background-bundle.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HeavyJab/TubeHunt.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HeavyJab/TubeHunt/issues"
+  },
+  "homepage": "https://github.com/HeavyJab/TubeHunt#readme"
+}

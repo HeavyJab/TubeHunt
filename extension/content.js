@@ -1,3 +1,5 @@
+const moment = require('moment');
+
 (async () => {
   const res = await fetch(
     "https://us-central1-tube-hunt.cloudfunctions.net/app/api/channels"
