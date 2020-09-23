@@ -2,15 +2,9 @@
 
   createChannelCard = (channel) => {
     const Card = document.createElement("div");
-    Card.classList.add(
-      "channel-card",
-      "style-scope",
-      "ytd-rich-item-renderer",
-      "ytd-rich-shelf-renderer",
-      "ytd-post-renderer"
-    );
+    Card.classList.add("channel-card");
     Card.setAttribute('id', channel.channelId)
-    Card.setAttribute("is-post", "");
+    Card.setAttribute("surface_", "backstage-surface-type-home");
 
 
     Card.innerHTML = `
@@ -70,12 +64,8 @@
   
     const channelSection = document.createElement("div");
     channelSection.setAttribute("id", "channel-section");
-    channelSection.classList.add(
-      "style-scope",
-      "ytd-rich-grid-renderer",
-      "section",
-      "collapsible",
-      "collapsed"
+    channelSection.setAttribute("class",
+      "section collapsible collapsed"
     );
   
     channels.sort((a, b) => {

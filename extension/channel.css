@@ -6,6 +6,7 @@
     flex-wrap: wrap;
     overflow: auto;
     margin-bottom: 5px;
+    justify-content: center;
 }
 
 .section.collapsed {
@@ -27,12 +28,13 @@
 }
 
 .channel-card {
-  height: 180px !important;
-  width: 300px !important;
-  padding: 10px !important;
+  height: 180px;
+  width: 300px ;
+  padding: 10px ;
   flex-shrink: 0;
   margin: 15px;
-  background: #fffffb !important;
+  background: inherit;
+  color: inherit;
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   transition: all 0.3s cubic-bezier(.25,.8,.25,1);
   display: flex;
