@@ -33,7 +33,7 @@
         "128": "icon128.png"
     },
     "browser_action": {
-        "default_icon": "download.png",
+        "default_icon": "icon128.png",
         "default_popup": "popup.html"
     },
     "permissions":[
