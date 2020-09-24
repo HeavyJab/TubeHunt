@@ -1,6 +1,15 @@
+import LikeButton from '../components/LikeButton';
+import ReactDOM from 'react-dom';
+import React from 'react';
+
 document.addEventListener(
   "DOMContentLoaded",
   function () {
+
+    var newNode = document.createElement("div");
+    document.body.appendChild(newNode)
+    ReactDOM.render(<LikeButton />, newNode);
+
     let submitChannel = document.getElementById("submitChannel");
     let darkMode = document.getElementById("darkMode");
     // let getChannels = document.getElementById("getChannels");

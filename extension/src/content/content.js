@@ -11,7 +11,7 @@
     <div id="header">
     <div id=channel-title>
         <a href="${"/channel/" + channel.channelId}" id='profile-link' target="_blank">
-            <div id=channel-profile> 
+            <div id=channel-profile>
                 <img id="channel-profile" src="${channel.imgSrc}">
                 <h3>
                     ${channel.title}
@@ -19,7 +19,7 @@
             </div>
         </a>
     </div>
-    <button id="show" class="voting" name="${channel.channelId}"> 
+    <button id="show" class="voting" name="${channel.channelId}">
             📺
         </button>
     <div id="submission-time">
@@ -31,7 +31,7 @@
     ${channel.desc}
 </p>
 
-<div id="channel-footer"> 
+<div id="channel-footer">
     <div id="voting">
         <div>
             <button id="upvote" class="voting" name=${
@@ -61,13 +61,13 @@
       "https://us-central1-tube-hunt.cloudfunctions.net/app/api/channels"
     );
     const channels = await res.json();
-  
+
     const channelSection = document.createElement("div");
     channelSection.setAttribute("id", "channel-section");
     channelSection.setAttribute("class",
       "section collapsible collapsed"
     );
-  
+
     channels.sort((a, b) => {
       return b.upvotesCount - a.upvotesCount;
     });
@@ -84,7 +84,7 @@
 
     return channelSection;
   }
-  
+
 
   //   <button id="downvote" name=${channel.channelId}>👎</button>
   // <div id="keywords">
@@ -109,7 +109,7 @@
     if (!document.contains(channelCard)) {
       console.log("Changing");
       inject();
-      
+
       if(showVideos) {
         console.log(showVideos)
         injectVideos(showVideos);
@@ -117,11 +117,11 @@
     }
   });
 
-  // observe changes  
+  // observe changes
   observe = () => {
     mo.observe(document.body, { childList: true, subtree: true });
   };
-  
+
 
     // inject channel cards immediately invoked
   (inject = async () => {
@@ -150,7 +150,7 @@
   // inject videos if videos exists
   injectVideos = (videos) => {
     mo.disconnect();
-    
+
     const channelId = videos.getAttribute('name')
     document.getElementById(channelId).insertAdjacentElement("afterend", videos);
 
@@ -182,7 +182,7 @@
       `;
         });
     }
-    
+
     return videos;
   };
 
