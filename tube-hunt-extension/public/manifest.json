@@ -1,0 +1,26 @@
+{
+  "manifest_version": 2,
+  "version": "0.0.1",
+  "browser_action": {
+    "default_popup": "index.html"
+  },
+  "content_security_policy": "script-src 'self' 'sha256-<the extension hash>'; object-src 'self'",
+  "content_scripts": [{
+    "matches": ["https://www.youtube.com/"],
+    "js": [
+      "/static/js/main.js",
+      "/static/js/content.js",
+      "/static/js/0.chunk.js"
+    ],
+    "css":["/static/css/main.css", "/static/css/content.css"],
+    "run_at": "document_end"
+  }],
+  "background": { "scripts": ["hot-reload.js"] },
+  "name": "Tube Hunt",
+  "icons": 
+    {
+      "16": "icon480.png",
+      "48": "icon480.png",
+      "128": "icon480.png"
+    }
+}
