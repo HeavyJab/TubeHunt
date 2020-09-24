@@ -11,7 +11,7 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
-function initApp() {
+function initAuthentication() {
   firebase.auth().onAuthStateChanged(user => {
     // firebase.User
     // https://firebase.google.com/docs/reference/js/firebase.User
@@ -81,6 +81,8 @@ function startSignIn() {
   }
 }
 
-window.onload = function() {
-  initApp();
-};
+// window.onload = function() {
+//   initAuthentication();
+// };
+
+export default initAuthentication;
