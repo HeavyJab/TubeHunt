@@ -14,12 +14,21 @@
   "devDependencies": {
     "browserify": "^16.5.2",
     "parcel-bundler": "^1.12.4",
+    "parcel-plugin-static-files-copy": "^2.5.0",
     "watchify": "^3.11.1"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "browserify popup.js > popup-bundle.js && browserify content.js > content-bundle.js && browserify background.js > background-bundle.js",
     "watch-all": "watchify popup.js -o popup-bundle.js && watchify content.js -o content-bundle.js && watchify background.js -o background-bundle.js"
+  "staticFiles": {
+    "staticPath": [
+      {
+        "staticPath": "static/popup",
+        "staticOutDir": "/popup"
+      }
+    ],
+    "watcherGlob": "**"
   },
   "repository": {
     "type": "git",
