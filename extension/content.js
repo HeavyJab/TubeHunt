@@ -164,26 +164,25 @@
     videos.setAttribute("name", `${channelId}`);
 
     const res = await fetch(
-      `https://www.googleapis.com/youtube/v3/search?key=AIzaSyCUY5bnDpFKFrHh6btLHNt5MT6PHIZBSyk&channelId=${channelId}&part=snippet,id&order=date&maxResults=5`,
+      `https://us-central1-tube-hunt.cloudfunctions.net/app/api/videos/${channelId}`,
       {
         method: "get",
       }
     );
 
-    if (res.status == 200) {
-      data = await res.json();
-      data.items.forEach((video) => {
+    data = await res.json()
+
+    if(res.status === 200) {
+      console.log(data)
+      data.videoIds.slice(0,8).forEach((videoId) => {
         videos.innerHTML += `
         <iframe width="250" height="170"
-        src="https://www.youtube.com/embed/${video.id.videoId}">
+        src="https://www.youtube.com/embed/${videoId}">
         </iframe>
       `;
-      });
-    } else {
-      console.log(res.status)
-      videos.innerHTML += `<h1>${res.status}🤷‍♂️</h1>`
+        });
     }
-
+    
     return videos;
   };
 

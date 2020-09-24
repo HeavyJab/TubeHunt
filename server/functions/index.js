@@ -112,19 +112,23 @@ app.get("/api/videos/:channelId", (req, res) => {
   (async () => {
     try {
       const channelId = req.params.channelId;
-      const videosUrl = `https://www.googleapis.com/youtube/v3/search?key=${YouTubeAPI.key}&channelId=${channelId}&part=snippet,id&order=date&maxResults=25`;
-      const { data } = await axios.get(videosUrl);
+      const { data } = await axios.get(`https://www.youtube.com/channel/${channelId}`);
+      const $ = cheerio.load(data);
 
-      videos = data.items.map((item) => {
-        return {
-          title: item.snippet.title,
-          desc: item.snippet.description,
-          publishTime: item.snippet.publishTime,
-          videoUrl: `www.youtube.com/watch?v=${item.id.videoId}`,
-        };
-      });
+      const regex = /watch[?]v=(\S{11})/g;
 
-      res.status(200).send(videos);
+      videoIds = []
+      while ((match = regex.exec(data)) !== null) {
+        videoIds.push(match[1])
+      }
+
+      response = {
+        status: 200,
+        // make videoId unique
+        videoIds: [...new Set(videoIds)]
+      }
+
+      res.status(200).send(response);
     } catch (error) {
       console.log(error);
       return res.status(500).send(error);
