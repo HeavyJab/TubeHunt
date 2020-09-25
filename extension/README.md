@@ -1,6 +1,8 @@
 # Tubehunt
 
 ## Dev
-1. `npm install` - Install deps
-2. `npm run build` - Bundle files with Browserify.
-3. `npm watch` - Watch file changes and bundle them on file changes.
+- `npm install` - Install deps.
+- `npm run clean` - Clean up `dist` build folder.
+- `npm run watch:all` - Hot reload entire extension.
+- `auto/dev` - Convenience for `clean` and `watch:all`.
+- `auto/build-prod` - Build minified bundle for production.
