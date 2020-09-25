@@ -1,5 +1,3 @@
-import 'babel-polyfill';
-
 const createChannelCard = (channel) => {
   const Card = document.createElement("div");
   Card.classList.add("channel-card");
