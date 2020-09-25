@@ -1,3 +1,6 @@
+// Seems to be interactions with the chrome API to watch and install the hotloaded chrome extension
+// https://github.com/ceoimon/react-parcel-ts-extension-boilerplate/blob/master/src/extensionAPIs.ts
+
 const apis = [
   'alarms',
   'bookmarks',

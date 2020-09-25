@@ -12,10 +12,8 @@
     "react-dom": "^16.13.1"
   },
   "devDependencies": {
-    "browserify": "^16.5.2",
     "parcel-bundler": "^1.12.4",
-    "parcel-plugin-static-files-copy": "^2.5.0",
-    "watchify": "^3.11.1"
+    "parcel-plugin-static-files-copy": "^2.5.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
