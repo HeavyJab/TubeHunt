@@ -1,6 +1,20 @@
+import LikeButton from '../components/LikeButton';
+import ReactDOM from 'react-dom';
+import React from 'react';
+import initAuthentication from '../authentication';
+
+window.onload = function() {
+  initAuthentication();
+};
+
 document.addEventListener(
   "DOMContentLoaded",
   function () {
+
+    var newNode = document.createElement("div");
+    document.body.appendChild(newNode)
+    ReactDOM.render(<LikeButton />, newNode);
+
     let submitChannel = document.getElementById("submitChannel");
     let darkMode = document.getElementById("darkMode");
     // let getChannels = document.getElementById("getChannels");
@@ -44,9 +58,9 @@ document.addEventListener(
           });
       }
     });
-    darkMode.addEventListener("click", function () {
-      console.log("Made dark!");
-    });
+    // darkMode.addEventListener("click", function () {
+    //   console.log("Made dark!");
+    // });
     // Removed For now since button is no longer required
     // getChannels.addEventListener("click", function (e) {
     // e.preventDefault();

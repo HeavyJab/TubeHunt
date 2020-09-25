@@ -7,16 +7,31 @@
     "test": "test"
   },
   "dependencies": {
-    "moment": "^2.29.0"
+    "moment": "^2.29.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
   },
   "devDependencies": {
-    "browserify": "^16.5.2",
-    "watchify": "^3.11.1"
+    "parcel-bundler": "^1.12.4",
+    "parcel-plugin-static-files-copy": "^2.5.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "browserify popup.js > popup-bundle.js && browserify content.js > content-bundle.js && browserify background.js > background-bundle.js",
-    "watch-all": "watchify popup.js -o popup-bundle.js && watchify content.js -o content-bundle.js && watchify background.js -o background-bundle.js"
+    "watch:all": "parcel src/popup/popup.js src/background/background.js src/content/content.js",
+    "watch:popup": "parcel src/popup/popup.js -o popup.js -d dist/popup",
+    "watch:content": "parcel src/content/content.js -o content.js -d dist/content",
+    "watch:background": "parcel src/background/background.js -o background.js -d dist/background",
+    "build-prod": "parcel build src/popup/popup.js src/background/background.js src/content/content.js",
+    "clean": "rm -rf dist"
+  },
+  "staticFiles": {
+    "staticPath": [
+      {
+        "staticPath": "static/popup",
+        "staticOutDir": "/popup"
+      }
+    ],
+    "watcherGlob": "**"
   },
   "repository": {
     "type": "git",

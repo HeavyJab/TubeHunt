@@ -5,3 +5,5 @@ build
 ./server/functions/permission.json
 ./server/functions/YouTubeAPI.json
 extension/*-bundle.js
+extension/.cache
+extension/dist
