@@ -1,6 +1,3 @@
-import "core-js/stable";
-import "regenerator-runtime/runtime";
-
 const createChannelCard = (channel) => {
   const Card = document.createElement("div");
   Card.classList.add("channel-card");
