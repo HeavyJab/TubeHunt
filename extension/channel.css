@@ -79,6 +79,7 @@ a:visited {
 
 
 #channel-profile > img {
+    cursor: pointer;
     max-width: 12%;
     max-height: 12%;
     border-radius: 50%;
@@ -119,6 +120,7 @@ a:visited {
 
 .voting:hover {
     all: unset;
+    cursor: pointer;
     font-size: 30px;
     border-radius: 50px;
     background:lightblue;
