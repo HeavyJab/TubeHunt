@@ -8,10 +8,9 @@
             "matches": [
                 "https://www.youtube.com/"
             ],
-            "css": ["channel.css"],
+            "css": ["dist/content/channel.css"],
             "js": [
-                "dist/content/content.js",
-                "dist/background/background.js"
+                "dist/content/content.js"
             ]
         }
     ],

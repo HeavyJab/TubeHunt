@@ -28,7 +28,7 @@ const createChannelCard = (channel) => {
 </div>
 
 
-<p id="channel-desc">
+<p class="channel-desc">
   ${channel.desc}
 </p>
 
