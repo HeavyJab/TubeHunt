@@ -31,9 +31,13 @@
       {
         "staticPath": "static/popup",
         "staticOutDir": "/popup"
+      },
+      {
+        "staticPath": "static/content",
+        "staticOutDir": "/content"
       }
     ],
-    "watcherGlob": "**"
+    "watcherGlob": "**/*.html"
   },
   "repository": {
     "type": "git",
