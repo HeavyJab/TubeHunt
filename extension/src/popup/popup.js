@@ -1,7 +1,7 @@
-import LikeButton from '../components/LikeButton';
-import ReactDOM from 'react-dom';
-import React from 'react';
+import React from 'react'
+import ReactDOM from 'react-dom'
 import initAuthentication from '../authentication';
+import App from '../components/App';
 
 window.onload = function() {
   initAuthentication();
@@ -11,9 +11,10 @@ document.addEventListener(
   "DOMContentLoaded",
   function () {
 
+    // entrypoint for React is here
     var newNode = document.createElement("div");
     document.body.appendChild(newNode)
-    ReactDOM.render(<LikeButton />, newNode);
+    ReactDOM.render(<App />, newNode);
 
     let submitChannel = document.getElementById("submitChannel");
     let darkMode = document.getElementById("darkMode");
