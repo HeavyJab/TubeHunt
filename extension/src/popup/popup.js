@@ -13,7 +13,7 @@ document.addEventListener(
 
     // entrypoint for React is here
     var newNode = document.createElement("div");
-    document.body.appendChild(newNode)
+    document.body.appendChild(newNode);
     ReactDOM.render(<App />, newNode);
 
     let submitChannel = document.getElementById("submitChannel");
