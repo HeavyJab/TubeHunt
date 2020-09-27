@@ -2,9 +2,7 @@ import React from 'react';
 import FeedbackButton from '../FeedbackButton';
 
 const App = () => (
-  <div>
-    <FeedbackButton />
-  </div>
+  <FeedbackButton />
 );
 
 export default App;
