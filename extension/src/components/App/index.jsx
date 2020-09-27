@@ -1,11 +1,9 @@
 import React from 'react';
-import SubmittableTextInput from '../SubmittableTextInput';
+import FeedbackButton from '../FeedbackButton';
 
 const App = () => (
   <div>
-    <SubmittableTextInput
-      labelText={'Feedback'}
-      submitFn={_ => Promise.resolve(_)} />
+    <FeedbackButton />
   </div>
 );
 
