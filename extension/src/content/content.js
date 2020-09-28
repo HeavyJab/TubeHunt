@@ -1,92 +1,92 @@
-import 'regenerator-runtime/runtime'
+gitimport "core-js/stable";
+import "regenerator-runtime/runtime";
 
-(async () => {
-
-  createChannelCard = (channel) => {
-    const Card = document.createElement("div");
-    Card.classList.add("channel-card");
-    Card.setAttribute('id', channel.channelId)
-    Card.setAttribute("surface_", "backstage-surface-type-home");
+const createChannelCard = (channel) => {
+  const Card = document.createElement("div");
+  Card.classList.add("channel-card");
+  Card.setAttribute('id', channel.channelId)
+  Card.setAttribute("surface_", "backstage-surface-type-home");
 
 
-    Card.innerHTML = `
-    <div id="header">
-    <div id=channel-title>
-        <a href="${"/channel/" + channel.channelId}" id='profile-link' target="_blank">
-            <div id=channel-profile>
-                <img id="channel-profile" src="${channel.imgSrc}">
-                <h3>
-                    ${channel.title}
-                </h3>
-            </div>
-        </a>
-    </div>
-    <button id="show" class="voting" name="${channel.channelId}">
-            📺
-        </button>
-    <div id="submission-time">
+  Card.innerHTML = `
+  <div id="header">
+  <div id=channel-title>
+      <a href="${"/channel/" + channel.channelId}" id='profile-link' target="_blank">
+          <div id=channel-profile>
+              <img id="channel-profile" src="${channel.imgSrc}">
+              <h3>
+                  ${channel.title}
+              </h3>
+          </div>
+      </a>
+  </div>
+  <button id="show" class="voting" name="${channel.channelId}">
+          📺
+      </button>
+  <div id="submission-time">
 </div>
 </div>
 
 
-<p id="channel-desc">
-    ${channel.desc}
+<p class="channel-desc">
+  ${channel.desc}
 </p>
 
 <div id="channel-footer">
-    <div id="voting">
-        <div>
-            <button id="upvote" class="voting" name=${
-              channel.channelId
-            }>👏</button>
-            <span style="font-size:18px" id="upvotesCount-${channel.channelId}">${
-  channel.upvotesCount
+  <div id="voting">
+      <div>
+          <button id="upvote" class="voting" name=${
+            channel.channelId
+          }>👏</button>
+          <span style="font-size:18px" id="upvotesCount-${channel.channelId}">${
+channel.upvotesCount
 }</span>
-        </div>
+      </div>
 
-        <a href="https://www.youtube.com/channel/${
-          channel.channelId
-        }?sub_confirmation=1">
-        <button id="subscribe" class="voting" name=${
-          channel.channelId
-        }>🍿</button>
-        </a>
-    </div>
+      <a href="https://www.youtube.com/channel/${
+        channel.channelId
+      }?sub_confirmation=1">
+      <button id="subscribe" class="voting" name=${
+        channel.channelId
+      }>🍿</button>
+      </a>
+  </div>
 </div>
-    `;
+  `;
 
-    return Card
-  }
+  return Card
+}
 
-  createChannelSection = async (videoSection) => {
-    const res = await fetch(
-      "https://us-central1-tube-hunt.cloudfunctions.net/app/api/channels"
-    );
-    const channels = await res.json();
+const createChannelSection = async (videoSection) => {
+  const res = await fetch(
+    "https://us-central1-tube-hunt.cloudfunctions.net/app/api/channels"
+  );
+  const channels = await res.json();
 
-    const channelSection = document.createElement("div");
-    channelSection.setAttribute("id", "channel-section");
-    channelSection.setAttribute("class",
-      "section collapsible collapsed"
-    );
+  const channelSection = document.createElement("div");
+  channelSection.setAttribute("id", "channel-section");
+  channelSection.setAttribute("class",
+    "section collapsible collapsed"
+  );
 
-    channels.sort((a, b) => {
-      return b.upvotesCount - a.upvotesCount;
-    });
+  channels.sort((a, b) => {
+    return b.upvotesCount - a.upvotesCount;
+  });
 
+  console.log(videoSection)
+  if(videoSection) {
     console.log(videoSection)
-    if(videoSection) {
-      console.log(videoSection)
 
-    } else {
-      channels.forEach((channel) => {
-        channelSection.appendChild(createChannelCard(channel))
-      });
-    }
-
-    return channelSection;
+  } else {
+    channels.forEach((channel) => {
+      channelSection.appendChild(createChannelCard(channel))
+    });
   }
 
+  return channelSection;
+}
+
+export default (async () => {
 
   //   <button id="downvote" name=${channel.channelId}>👎</button>
   // <div id="keywords">
@@ -120,37 +120,39 @@ import 'regenerator-runtime/runtime'
   });
 
   // observe changes
-  observe = () => {
+  const observe = () => {
     mo.observe(document.body, { childList: true, subtree: true });
   };
 
 
     // inject channel cards immediately invoked
-  (inject = async () => {
-      mo.disconnect();
+  const inject = () => {
+    mo.disconnect();
 
-      // const huntSection = document.createElement('div');
-      // huntSection.setAttribute('style', 'display:flex; flex-direction: column;')
+    // const huntSection = document.createElement('div');
+    // huntSection.setAttribute('style', 'display:flex; flex-direction: column;')
 
-      const toggle = document.createElement('button');
-      toggle.setAttribute('id', 'toggle');
+    const toggle = document.createElement('button');
+    toggle.setAttribute('id', 'toggle');
 
-      if(showingChannels){
-        toggle.innerHTML = 'Hunt 🎉'
-      } else {
-        toggle.innerHTML = 'Hunt🤞'
-      }
+    if(showingChannels){
+      toggle.innerHTML = 'Hunt 🎉'
+    } else {
+      toggle.innerHTML = 'Hunt🤞'
+    }
 
-      // huntSection.appendChild(toggle)
-      // huntSection.appendChild(channelCard)
+    // huntSection.appendChild(toggle)
+    // huntSection.appendChild(channelCard)
 
-      mainPage.prepend(channelCard);
-      mainPage.prepend(toggle)
-      observe();
-  })();
+    mainPage.prepend(channelCard);
+    mainPage.prepend(toggle)
+    observe();
+  }
+
+  inject();
 
   // inject videos if videos exists
-  injectVideos = (videos) => {
+  const injectVideos = (videos) => {
     mo.disconnect();
 
     const channelId = videos.getAttribute('name')
@@ -160,7 +162,7 @@ import 'regenerator-runtime/runtime'
   }
 
   // create a video section html
-  createVideosSection = async (channelId) => {
+  const createVideosSection = async (channelId) => {
     const videos = document.createElement("div");
     videos.setAttribute("id", `video-section`);
     videos.setAttribute("name", `${channelId}`);
@@ -172,7 +174,7 @@ import 'regenerator-runtime/runtime'
       }
     );
 
-    data = await res.json()
+    const data = await res.json()
 
     if(res.status === 200) {
       console.log(data)
@@ -180,7 +182,7 @@ import 'regenerator-runtime/runtime'
         videos.innerHTML += `
         <iframe width="250" height="170"
         src="https://www.youtube.com/embed/${videoId}">
-        </iframe>
+        </iframe>s
       `;
         });
     }
