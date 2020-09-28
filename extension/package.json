@@ -8,11 +8,14 @@
   },
   "dependencies": {
     "@babel/preset-react": "^7.10.4",
+    "components": "^0.1.0",
     "core-js": "^3.6.5",
+    "dayjs": "^1.9.0",
     "moment": "^2.29.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "regenerator-runtime": "^0.13.7"
+    "regenerator-runtime": "^0.13.7",
+    "styled-components": "^5.2.0"
   },
   "devDependencies": {
     "@testing-library/dom": "^7.24.3",

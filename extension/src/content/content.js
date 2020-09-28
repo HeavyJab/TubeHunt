@@ -1,206 +1,67 @@
 import "core-js/stable";
 import "regenerator-runtime/runtime";
-import React from 'react'
-import ReactDOM from 'react-dom'
+import React, {useState, useEffect}from 'react';
+import ReactDOM from 'react-dom';
+import ChannelSection from '../components/ChannelSection';
+import axios from 'axios';
+import {Button, VerticalSection} from '../components/Styles'
 
 const root = document.createElement('div')
 root.setAttribute('id', 'channel-section')
+root.setAttribute('style', 'width:100%; display:flex; align-items: center; flex-direction:column;')
 
 const App = () => {
+  const [open, setOpen] = useState(false);
+  const [channels, setChannels] = useState([])
+
+  useEffect(() => {
+    console.log("channel section mounted!");
+    const fetchChannels = async () => {
+      const res = await axios.get(
+        "https://us-central1-tube-hunt.cloudfunctions.net/app/api/channels"
+      );
+      const channels = res.data;
+      setChannels(channels);
+    };
+    fetchChannels();
+  }, []);
+
   return (
-    <h1>Starting !!!</h1>
+    <>
+        <Button onClick={() => {setOpen(!open)}}>{open? <h3>Hunting🎉</h3> : <h3>Hunt🤞</h3> }</Button>
+        {open? (<ChannelSection channels={channels}/>) : <ChannelSection channels={null}/>}
+    </>
   )
 }
 
 ReactDOM.render(<App />, root);
 
-  //  Observe DOM mutation
+const mainPage = document.querySelector("#contents");
 
-  const mainPage = document.querySelector("#contents");
-
-  // Observer class to watch for DOM changes
-  const mo = new MutationObserver(() => {
-    if (!document.contains(root)) {
-      console.log("Changing");
-      inject();
-    }
-  });
-
-  // observe changes
-  const observe = () => {
-    mo.observe(mainPage, { childList: true, subtree: true });
-  };
-
-
-    // inject channel cards immediately invoked
-  const inject = () => {
-    mo.disconnect();
-
-    mainPage.prepend(root);
-    observe();
+// new observer
+const mo = new MutationObserver(() => {
+  if (!document.contains(root)) {
+    console.log("Changing");
+    inject();
   }
+});
 
-  inject();
-
-// const createChannelCard = (channel) => {
-//   const Card = document.createElement("div");
-//   Card.classList.add("channel-card");
-//   Card.setAttribute('id', channel.channelId)
-//   Card.setAttribute("surface_", "backstage-surface-type-home");
+// observe changes
+const observe = () => {
+  mo.observe(mainPage, { childList: true, subtree: true });
+};
 
 
-//   Card.innerHTML = `
-//   <div id="header">
-//   <div id=channel-title>
-//       <a href="${"/channel/" + channel.channelId}" id='profile-link' target="_blank">
-//           <div id=channel-profile>
-//               <img id="channel-profile" src="${channel.imgSrc}">
-//               <h3>
-//                   ${channel.title}
-//               </h3>
-//           </div>
-//       </a>
-//   </div>
-//   <button id="show" class="voting" name="${channel.channelId}">
-//           📺
-//       </button>
-//   <div id="submission-time">
-// </div>
-// </div>
+  // inject channel cards immediately invoked
+const inject = () => {
+  mo.disconnect();
 
+  mainPage.prepend(root);
+  observe();
+}
 
-// <p class="channel-desc">
-//   ${channel.desc}
-// </p>
+inject();
 
-// <div id="channel-footer">
-//   <div id="voting">
-//       <div>
-//           <button id="upvote" class="voting" name=${
-//             channel.channelId
-//           }>👏</button>
-//           <span style="font-size:18px" id="upvotesCount-${channel.channelId}">${
-// channel.upvotesCount
-// }</span>
-//       </div>
-
-//       <a href="https://www.youtube.com/channel/${
-//         channel.channelId
-//       }?sub_confirmation=1">
-//       <button id="subscribe" class="voting" name=${
-//         channel.channelId
-//       }>🍿</button>
-//       </a>
-//   </div>
-// </div>
-//   `;
-
-//   return Card
-// }
-
-// const createChannelSection = async (videoSection) => {
-//   const res = await fetch(
-//     "https://us-central1-tube-hunt.cloudfunctions.net/app/api/channels"
-//   );
-//   const channels = await res.json();
-
-//   const channelSection = document.createElement("div");
-//   channelSection.setAttribute("id", "channel-section");
-//   channelSection.setAttribute("class",
-//     "section collapsible collapsed"
-//   );
-
-//   channels.sort((a, b) => {
-//     return b.upvotesCount - a.upvotesCount;
-//   });
-
-//   console.log(videoSection)
-//   if(videoSection) {
-//     console.log(videoSection)
-
-//   } else {
-//     channels.forEach((channel) => {
-//       channelSection.appendChild(createChannelCard(channel))
-//     });
-//   }
-
-//   return channelSection;
-// }
-
-// export default (async () => {
-
-//   //   <button id="downvote" name=${channel.channelId}>👎</button>
-//   // <div id="keywords">
-//   //       <span>${channel.keywords[0]}</span>
-//   //       <span>${channel.keywords[1]}</span>
-//   //       <span>${channel.keywords[2]}</span>
-//   //       <span>${channel.keywords[3]}</span>
-//   //       <span>${channel.keywords[4]}</span>
-//   //   </div>
-//   // <span>${new moment(channel.dateSubmitted).fromNow()}</span>
-
-
-//   //   Observe DOM mutation
-
-//   let showVideos = false;
-//   let channelCard = await createChannelSection(showVideos);
-//   let showingChannels = false
-//   let mainPage = document.querySelector("#contents");
-
-//   // Observer class to watch for DOM changes
-//   const mo = new MutationObserver(() => {
-//     if (!document.contains(channelCard)) {
-//       console.log("Changing");
-//       inject();
-
-//       if(showVideos) {
-//         console.log(showVideos)
-//         injectVideos(showVideos);
-//       }
-//     }
-//   });
-
-//   // observe changes
-//   const observe = () => {
-//     mo.observe(document.body, { childList: true, subtree: true });
-//   };
-
-
-//     // inject channel cards immediately invoked
-//   const inject = () => {
-//     mo.disconnect();
-
-//     // const huntSection = document.createElement('div');
-//     // huntSection.setAttribute('style', 'display:flex; flex-direction: column;')
-
-//     const toggle = document.createElement('button');
-//     toggle.setAttribute('id', 'toggle');
-
-//     if(showingChannels){
-//       toggle.innerHTML = 'Hunt 🎉'
-//     } else {
-//       toggle.innerHTML = 'Hunt🤞'
-//     }
-
-//     // huntSection.appendChild(toggle)
-//     // huntSection.appendChild(channelCard)
-
-//     mainPage.prepend(channelCard);
-//     mainPage.prepend(toggle)
-//     observe();
-//   }
-
-//   inject();
-
-//   // inject videos if videos exists
-//   const injectVideos = (videos) => {
-//     mo.disconnect();
-
-//     const channelId = videos.getAttribute('name')
-//     document.getElementById(channelId).insertAdjacentElement("afterend", videos);
-
-//     observe();
-//   }
 
 //   // create a video section html
 //   const createVideosSection = async (channelId) => {
