@@ -159,6 +159,30 @@ app.get("/api/videos/:channelId", (req, res) => {
 });
 
 // add comment to a channel
+app.post('/api/:channelId/comment', (req, res) => {
+  (async () => {
+      try {          
+          const channelId = req.params.channelId;
+          const { comment, uid } = req.body;
+          const comment_object = {
+            comment: comment,
+            uid: uid,
+            createdAt: Date.now(),
+          };
+
+          // create new comments
+          await db.collection(`channels`)
+          .doc(`/${channelId}/`)
+          .update({comments: admin.firestore.FieldValue.arrayUnion(comment_object)})
+          
+          return res.status(200).send(`added comment: ${comment}!`);
+
+      } catch(error) {
+          console.log(error);
+          return res.status(500).send(error);
+      }
+  })()
+});
 
 // a
 
