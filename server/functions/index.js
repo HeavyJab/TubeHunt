@@ -1,21 +1,12 @@
-const functions = require("firebase-functions");
-const admin = require("firebase-admin");
 const express = require("express");
 const cors = require("cors");
 const cheerio = require("cheerio");
 const axios = require("axios");
 const app = express();
-const YouTubeAPI = require("./YouTubeAPI.json");
+const { authentication } = require("./util/authentication");
+const { db, admin, functions } = require("./util/admin");
+
 app.use(cors({ origin: true }));
-
-const serviceAccount = require("./permission.json");
-
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://tube-hunt.firebaseio.com",
-});
-
-const db = admin.firestore();
 
 // create user doc on auth 
 exports.createUser = functions.auth.user().onCreate(async (user) => {
@@ -37,47 +28,55 @@ exports.createUser = functions.auth.user().onCreate(async (user) => {
 })
 
 // add authentication middleware
-app.get('/api/:channelId/upvote', (req, res) => {
-    (async () => {
-        try {          
-            const channelId = req.params.channelId;
-            const channelSnapshot = await db.collection(`channels`)
-            .doc(`/${channelId}/`)
-            .update({upvotesCount: admin.firestore.FieldValue.increment(1)})
-            
-            // check user profile and reduce its clap count
-            // add a upvote record to the channel object
+app.get("/api/:channelId/upvote", authentication, async (req, res) => {
+  try {
+    const upvote_by = {
+      uid: req.user.uid,
+      createdAt: Date.now(),
+    };
+    const channelId = req.params.channelId;
+    const channelSnapshot = await db.collection(`channels`);
 
-            return res.status(200).send('Upvoted!');
+    channelSnapshot
+      .doc(`/${channelId}/`)
+      .update({
+        upvotesCount: admin.firestore.FieldValue.increment(1),
+        upvotes: admin.firestore.FieldValue.arrayUnion(upvote_by),
+      });
 
-        } catch(error) {
-            console.log(error);
-            return res.status(500).send(error);
-        }
-    })()
+    return res.status(200).send("Upvoted!");
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send(error);
+  }
 });
 
 // add authentication middleware
-app.get('/api/:channelId/downvote', (req, res) => {
-    (async () => {
-        try {
-            const channelId = req.params.channelId;
-            const channelSnapshot = await db.collection(`channels`)
-            .doc(`/${channelId}/`)
-            .update({upvotesCount: admin.firestore.FieldValue.increment(-1)})
-            
-            return res.status(200).send('Downvoted!');
+app.get("/api/:channelId/downvote", authentication, async (req, res) => {
+  try {
+    const upvote_by = {
+      uid: req.user.uid,
+      createdAt: Date.now(),
+    };
+    const channelId = req.params.channelId;
+    const channelSnapshot = await db.collection(`channels`);
 
-        } catch(error) {
-            console.log(error);
-            return res.status(500).send(error);
-        }
-    })()
+    channelSnapshot
+      .doc(`/${channelId}/`)
+      .update({
+        upvotesCount: admin.firestore.FieldValue.increment(-1),
+        upvotes: admin.firestore.FieldValue.arrayUnion(upvote_by),
+      });
+
+    return res.status(200).send("Downvoted!");
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send(error);
+  }
 });
 
 // submit channels
-app.post("/api/channel/submit", (req, res) => {
-  (async () => {
+app.post("/api/channel/submit", authentication , async (req, res) => {
     try {
       const { url } = req.body;
       const { data } = await axios.get(url);
@@ -95,8 +94,8 @@ app.post("/api/channel/submit", (req, res) => {
                 imgSrc:$('link[rel="image_src"]').attr('href'),
                 dateSubmitted: Date.now(),
                 upvotesCount: 0,
-                upvotes: []
-                
+                upvotes: [],
+                submitedBy: req.user.uid
             }
 
       // get top 20 videos
@@ -109,12 +108,10 @@ app.post("/api/channel/submit", (req, res) => {
       console.log(error);
       return res.status(500).send(error);
     }
-  })();
 });
 
 // get all channels
-app.get("/api/channels", (req, res) => {
-  (async () => {
+app.get("/api/channels", async (req, res) => {
     try {
       const channelSnapshot = await db.collection("channels").orderBy("dateSubmitted", 'desc').get();
       const channels = [];
@@ -126,12 +123,10 @@ app.get("/api/channels", (req, res) => {
       console.log(error);
       return res.status(500).send(error);
     }
-  })();
 });
 
 // get videos by channels
-app.get("/api/videos/:channelId", (req, res) => {
-  (async () => {
+app.get("/api/videos/:channelId", async (req, res) => {
     try {
       const channelId = req.params.channelId;
       const { data } = await axios.get(`https://www.youtube.com/channel/${channelId}`);
@@ -155,18 +150,16 @@ app.get("/api/videos/:channelId", (req, res) => {
       console.log(error);
       return res.status(500).send(error);
     }
-  })();
 });
 
 // add comment to a channel
-app.post('/api/:channelId/comment', (req, res) => {
-  (async () => {
+app.post('/api/:channelId/comment', authentication, async (req, res) => {
       try {          
           const channelId = req.params.channelId;
-          const { comment, uid } = req.body;
+          const { comment } = req.body;
           const comment_object = {
             comment: comment,
-            uid: uid,
+            uid: req.user.uid,
             createdAt: Date.now(),
           };
 
@@ -181,7 +174,6 @@ app.post('/api/:channelId/comment', (req, res) => {
           console.log(error);
           return res.status(500).send(error);
       }
-  })()
 });
 
 // a
