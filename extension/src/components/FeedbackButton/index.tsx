@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import SubmittableTextInput from '../SubmittableTextInput';
-// import { ReactComponent as LoveFeedback } from './loveFeedback.svg';
+import LoveFeedback from './loveFeedback.svg';
 
 // TODO: credit creator from flaticon.com
 /*
@@ -40,7 +40,7 @@ const FeedbackButton = ({
           backgroundColor: 'transparent'
         }}
         onClick={() => setShowFeedbackInput(!showFeedbackInput) }>
-        <img style={{ width: '24px' }} src="./love.png" />
+        <LoveFeedback />
       </button>
       {
         showFeedbackInput ? (
