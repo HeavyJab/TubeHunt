@@ -32,7 +32,7 @@ const ChannelCard = props => {
     }, []);
 
     return (
-        <VerticalSection>
+        <>
             <Card>
                 <Header>
                     <Link href={'/channel/' + channelId} id='profile-link' target="_blank">
@@ -66,7 +66,7 @@ const ChannelCard = props => {
             </Card>
 
             {showVideos ? (<VideoSection videos={videos.videoIds} />) : null}
-        </VerticalSection>
+        </>
 
     )
 }

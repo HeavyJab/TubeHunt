@@ -8,7 +8,7 @@ import {Button, VerticalSection} from '../components/Styles'
 
 const root = document.createElement('div')
 root.setAttribute('id', 'channel-section')
-root.setAttribute('style', 'width:100%; display:flex; align-items: center; flex-direction:column;')
+root.setAttribute('style', 'width:100%; display:flex; align-items: center; overflow: auto; flex-direction:column;')
 
 const App = () => {
   const [open, setOpen] = useState(false);

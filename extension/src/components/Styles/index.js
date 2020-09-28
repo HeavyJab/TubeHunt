@@ -73,6 +73,17 @@ const VerticalSection = styled.div`
     display:flex;
     flex-direction: column;
     justify-items: center;
+    overflow: auto;
+    flex-shrink: 0;
 `
 
-export {Profile, Desc, Button, Footer, Link, Img, Card, Header, VerticalSection};
+const HorizontalSection = styled.div`
+    display:flex;
+    justify-items: space-between;
+    align-items: center;
+    overflow: scroll;
+    width: 100%;
+
+`
+
+export {Profile, Desc, Button, Footer, Link, Img, Card, Header, VerticalSection, HorizontalSection};
