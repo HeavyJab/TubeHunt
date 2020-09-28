@@ -17,15 +17,37 @@ admin.initializeApp({
 
 const db = admin.firestore();
 
+// create user doc on auth 
+exports.createUser = functions.auth.user().onCreate(async (user) => {
+  const user_profile = {
+      uid: user.uid,
+      email: user.email,
+      handle: null,
+      level: [
+        {level:1 , createdAt: Date.now()}
+      ]
+  }
+
+  // go to firestore and create user profile
+    await db.collection('users')
+    .doc(`/${user.uid}/`)
+    .create(user_profile)
+
+    return null;
+})
+
 // add authentication middleware
 app.get('/api/:channelId/upvote', (req, res) => {
     (async () => {
-        try {
+        try {          
             const channelId = req.params.channelId;
             const channelSnapshot = await db.collection(`channels`)
             .doc(`/${channelId}/`)
             .update({upvotesCount: admin.firestore.FieldValue.increment(1)})
             
+            // check user profile and reduce its clap count
+            // add a upvote record to the channel object
+
             return res.status(200).send('Upvoted!');
 
         } catch(error) {
@@ -135,5 +157,9 @@ app.get("/api/videos/:channelId", (req, res) => {
     }
   })();
 });
+
+// add comment to a channel
+
+// a
 
 exports.app = functions.https.onRequest(app);
