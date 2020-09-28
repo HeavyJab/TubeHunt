@@ -1,12 +1,35 @@
 import React, { useState } from 'react';
 import SubmittableTextInput from '../SubmittableTextInput';
-import { ReactComponent as LoveFeedback } from './loveFeedback.svg';
+// import { ReactComponent as LoveFeedback } from './loveFeedback.svg';
 
 // TODO: credit creator from flaticon.com
-// <div>Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+/*
+  <div>
+    Icons made by
+    <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a>
+    from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
+  </div>
+*/
 
-const FeedbackButton = (): JSX.Element => {
+export type FeedbackButtonProps = {
+  handleFeedbackSubmitFn: (s: string) => Promise<void>
+}
+
+const FeedbackButton = ({
+  handleFeedbackSubmitFn
+}: FeedbackButtonProps): JSX.Element => {
   const [showFeedbackInput, setShowFeedbackInput] = useState(false);
+
+  const handleFeedbackSubmit = async (str: string): Promise<void> => {
+    try {
+      await handleFeedbackSubmitFn(str);
+      console.log(`Received dummy feedback!: ${str}`);
+
+      setShowFeedbackInput(false);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <div>
@@ -17,13 +40,13 @@ const FeedbackButton = (): JSX.Element => {
           backgroundColor: 'transparent'
         }}
         onClick={() => setShowFeedbackInput(!showFeedbackInput) }>
-        <LoveFeedback />
+        <img style={{ width: '24px' }} src="./love.png" />
       </button>
       {
         showFeedbackInput ? (
           <SubmittableTextInput
             labelText={'Got some feedback for us? We\'d love to hear it!'}
-            submitFn={() => Promise.resolve() }
+            submitFn={handleFeedbackSubmit}
           />
         ) : null
       }

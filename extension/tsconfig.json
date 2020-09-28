@@ -4,5 +4,6 @@
     "jsx": "react",
     "module": "commonjs",
     "esModuleInterop": true
-  }
+  },
+  "include": ["./.d.ts"]
 }

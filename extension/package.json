@@ -15,6 +15,8 @@
     "regenerator-runtime": "^0.13.7"
   },
   "devDependencies": {
+    "@babel/core": "^7.11.6",
+    "@babel/preset-env": "^7.11.5",
     "@testing-library/dom": "^7.24.3",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.0.4",
@@ -25,9 +27,11 @@
     "@types/react-dom": "^16.9.8",
     "@typescript-eslint/eslint-plugin": "^4.2.0",
     "@typescript-eslint/parser": "^4.2.0",
+    "babel-jest": "^26.3.0",
     "eslint": "^7.9.0",
     "eslint-plugin-react": "^7.21.2",
     "jest": "^26.4.2",
+    "parcel": "^1.12.4",
     "parcel-bundler": "^1.12.4",
     "parcel-plugin-static-files-copy": "^2.5.0",
     "ts-jest": "^26.4.0",
@@ -44,9 +48,13 @@
   },
   "jest": {
     "transform": {
-      "^.+\\.tsx?$": "ts-jest"
+      "^.+\\.tsx?$": "ts-jest",
+      "^.+\\.js$": "babel-jest"
     },
     "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleNameMapper": {
+      "\\.svg": "<rootDir>/__mocks__/svgrMock.js"
+    },
     "moduleFileExtensions": [
       "ts",
       "tsx",
