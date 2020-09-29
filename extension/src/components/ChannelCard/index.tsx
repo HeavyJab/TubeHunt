@@ -43,7 +43,6 @@ const ChannelCard = props => {
                             </h3>
                         </Profile>
                     </Link>
-                    <span>{dayjs(dateSubmitted).fromNow()}</span>
                 </Header>
 
 
@@ -54,7 +53,7 @@ const ChannelCard = props => {
                 <Footer>
                     <div>
                         <Button id="upvote" className="voting">👏</Button>
-                        <span>{upvotesCount}</span>
+                        {upvotesCount}
                     </div>
 
                     <Button onClick={() => { setShowVideos(!showVideos) }}>📺</Button>

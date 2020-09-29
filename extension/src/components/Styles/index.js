@@ -72,8 +72,9 @@ const Profile = styled.div`
 const VerticalSection = styled.div`
     display:flex;
     flex-direction: column;
-    justify-items: center;
     overflow: auto;
+    align-items: start;
+    width:100%;
     flex-shrink: 0;
 `
 
@@ -83,7 +84,12 @@ const HorizontalSection = styled.div`
     align-items: center;
     overflow: scroll;
     width: 100%;
-
+    margin-bottom: 10px;
 `
 
-export {Profile, Desc, Button, Footer, Link, Img, Card, Header, VerticalSection, HorizontalSection};
+const TimeSubmitted = styled.h1`
+    margin-left: 15px;
+    margin-top: 5px;
+`
+
+export {Profile, Desc, Button, Footer, Link, Img, Card, Header, VerticalSection, HorizontalSection, TimeSubmitted};
