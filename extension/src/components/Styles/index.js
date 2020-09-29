@@ -74,6 +74,7 @@ const VerticalSection = styled.div`
     flex-direction: column;
     overflow: auto;
     align-items: start;
+    color: var(--yt-spec-text-primary);
     width:100%;
     flex-shrink: 0;
 `
@@ -92,4 +93,13 @@ const TimeSubmitted = styled.h1`
     margin-top: 5px;
 `
 
-export {Profile, Desc, Button, Footer, Link, Img, Card, Header, VerticalSection, HorizontalSection, TimeSubmitted};
+const Span = styled.span`
+    font-size: 16px;
+`
+
+const Clap = styled.div`
+    display: flex;
+    align-items: baseline;
+`
+
+export {Profile, Desc, Button, Footer, Link, Img, Card, Header, VerticalSection, HorizontalSection, TimeSubmitted, Span, Clap};

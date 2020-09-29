@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom';
 import ChannelSection from '../components/ChannelSection';
 import axios from 'axios';
 import {Button, VerticalSection} from '../components/Styles'
+import dayjs from 'dayjs';
 
 const root = document.createElement('div')
 root.setAttribute('id', 'channel-section')
@@ -21,20 +22,43 @@ const App = () => {
         "https://us-central1-tube-hunt.cloudfunctions.net/app/api/channels"
       );
       const channels = res.data;
-      setChannels(channels);
+
+      let channelsSorted = {};
+
+      channels
+        .filter((channel) => dayjs(channel.dateSubmitted).isSame(dayjs(), "month"))
+        .forEach((channel) => {
+          const date = dayjs(channel.dateSubmitted).format("dddd DD MMM");
+          if (channelsSorted[date]) {
+            channelsSorted[date].push(channel);
+            channelsSorted[date].sort((a, b) => {
+              return b.upvotesCount - a.upvotesCount;
+            });
+          } else {
+            channelsSorted[date] = [channel];
+          }
+        });
+
+      console.log(`setting channels ${channelsSorted}`);
+      setChannels(channelsSorted);
     };
     fetchChannels();
   }, []);
 
   return (
-    <>
+    <VerticalSection>
         <Button onClick={() => {setOpen(!open)}}>{open? <h3>Hunting🎉</h3> : <h3>Hunt🤞</h3> }</Button>
-        {open? (<ChannelSection channels={channels}/>) : <ChannelSection channels={null}/>}
-    </>
+        {open? (<ChannelSection channels={channels}/>) : null}
+    </VerticalSection>
   )
 }
 
-ReactDOM.render(<App />, root);
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  root
+);
 
 const mainPage = document.querySelector("#contents");
 
@@ -61,101 +85,3 @@ const inject = () => {
 }
 
 inject();
-
-
-//   // create a video section html
-//   const createVideosSection = async (channelId) => {
-//     const videos = document.createElement("div");
-//     videos.setAttribute("id", `video-section`);
-//     videos.setAttribute("name", `${channelId}`);
-
-//     const res = await fetch(
-//       `https://us-central1-tube-hunt.cloudfunctions.net/app/api/videos/${channelId}`,
-//       {
-//         method: "get",
-//       }
-//     );
-
-//     const data = await res.json()
-
-//     if(res.status === 200) {
-//       console.log(data)
-//       data.videoIds.slice(0,8).forEach((videoId) => {
-//         videos.innerHTML += `
-//         <iframe width="250" height="170"
-//         src="https://www.youtube.com/embed/${videoId}">
-//         </iframe>s
-//       `;
-//         });
-//     }
-
-//     return videos;
-//   };
-
-//   // monitor all click events
-//   window.onclick = async (event) => {
-//     const target = event.target;
-//     if (target.matches("#upvote")) {
-//       const channelId = document.activeElement.getAttribute("name");
-
-//       // change the view
-//       let upvotesCount = document.getElementById(`upvotesCount-${channelId}`)
-//         .innerText;
-//       const upvotesElm = document.getElementById(`upvotesCount-${channelId}`);
-//       upvotesCount = parseInt(upvotesCount) + 1;
-//       upvotesElm.innerHTML = upvotesCount;
-
-//       // change model
-//       const res = await fetch(
-//         `https://us-central1-tube-hunt.cloudfunctions.net/app/api/${channelId}/upvote`,
-//         {
-//           method: "get",
-//         }
-//       );
-//       console.log("Upvoted!");
-//     }
-
-//     // show videos
-//     if (target.matches("#show")) {
-//       console.log("clicked!!!!");
-//       const channelId = document.activeElement.getAttribute("name");
-
-//       if (showVideos) {
-//         console.log("contains channel-section");
-//         if (
-//           document.getElementById("video-section").getAttribute("name") != channelId
-//         ) {
-//           document.getElementById("video-section").remove();
-//           const videos = await createVideosSection(channelId);
-//           showVideos = videos
-//           injectVideos(videos);
-//         } else {
-//           showVideos = false;
-//           document.getElementById("video-section").remove();
-//         }
-//         // if there is no showVideos
-//       } else {
-//         const videos = await createVideosSection(channelId);
-//         showVideos = videos
-//         injectVideos(videos);
-//       }
-//     }
-
-//     // toggle more channels
-//     if (target.matches("#toggle")) {
-//       if(showingChannels){
-//         document.querySelector('.section.collapsible').classList.toggle('collapsed');
-//         document.querySelector('#toggle').innerHTML = 'Hunt🤞'
-//         showingChannels = false;
-
-//       } else {
-//         document.querySelector('#toggle').innerHTML = 'Hunt 🎉'
-//         document.querySelector('.section.collapsible').classList.toggle('collapsed');
-//         showingChannels = true;
-//       }
-
-//     }
-//   };
-// })();
-
-// console.log("loaded the script!");
