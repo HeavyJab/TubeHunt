@@ -1,10 +1,22 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import initAuthentication from '../authentication';
 import App from '../components/App';
+import * as firebase from 'firebase/app';
+import 'firebase/firestore';
 
 window.onload = function() {
-  initAuthentication();
+  const firebaseConfig = {
+    apiKey: 'AIzaSyCUY5bnDpFKFrHh6btLHNt5MT6PHIZBSyk',
+    authDomain: 'tube-hunt.firebaseapp.com',
+    databaseURL: 'https://tube-hunt.firebaseio.com',
+    projectId: 'tube-hunt',
+    storageBucket: 'tube-hunt.appspot.com',
+    messagingSenderId: '221785724000',
+    appId: '1:221785724000:web:ddb952871d9a069d549f05',
+    measurementId: 'G-H7E9TDZVNB'
+  };
+
+  firebase.initializeApp(firebaseConfig);
 };
 
 document.addEventListener(
@@ -12,9 +24,7 @@ document.addEventListener(
   function () {
 
     // entrypoint for React is here
-    var newNode = document.createElement("div");
-    document.body.appendChild(newNode);
-    ReactDOM.render(<App />, newNode);
+    ReactDOM.render(<App />, document.getElementById("app"));
 
     let submitChannel = document.getElementById("submitChannel");
     let darkMode = document.getElementById("darkMode");
