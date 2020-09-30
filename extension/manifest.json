@@ -41,6 +41,15 @@
     "permissions":[
         "https://us-central1-tube-hunt.cloudfunctions.net/app/api/*",
         {"web_accessible_resources": ["channel.css"]},
-        "identity"
-    ]
+        "identity",
+        "tabs",
+        "storage"
+    ],
+    "externally_connectable": {
+        "ids": ["eeaedbnnncfnobgbhahgdahogoedckbi"],
+        "matches": [
+            "https://www.youtube.com/"
+        ],
+        "accepts_tls_channel_id": false
+    }
 }

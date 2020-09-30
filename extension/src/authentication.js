@@ -1,15 +1,3 @@
-const firebaseConfig = {
-  apiKey: "AIzaSyCUY5bnDpFKFrHh6btLHNt5MT6PHIZBSyk",
-  authDomain: "tube-hunt.firebaseapp.com",
-  databaseURL: "https://tube-hunt.firebaseio.com",
-  projectId: "tube-hunt",
-  storageBucket: "tube-hunt.appspot.com",
-  messagingSenderId: "221785724000",
-  appId: "1:221785724000:web:ddb952871d9a069d549f05",
-  measurementId: "G-H7E9TDZVNB"
-};
-
-firebase.initializeApp(firebaseConfig);
 
 function initAuthentication() {
   firebase.auth().onAuthStateChanged(user => {
@@ -60,6 +48,11 @@ function startAuth(interactive) {
       var credential = firebase.auth.GoogleAuthProvider.credential(null, token);
       firebase.auth().signInWithCredential(credential).catch(function(error) {
         // The OAuth token might have been invalidated. Lets' remove it from cache.
+        chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+          chrome.tabs.sendMessage(tabs[0].id, {greeting: "hello"}, function(response) {
+              alert(response.farewell);
+          });
+        });
         if (error.code === 'auth/invalid-credential') {
           chrome.identity.removeCachedAuthToken({token: token}, function() {
             startAuth(interactive);

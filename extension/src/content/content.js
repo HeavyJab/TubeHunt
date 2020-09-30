@@ -11,6 +11,10 @@ const root = document.createElement('div')
 root.setAttribute('id', 'channel-section')
 root.setAttribute('style', 'width:100%; display:flex; align-items: center; overflow: auto; flex-direction:column;')
 
+chrome.runtime.onMessage.addListener((payload, sender, sendResponse) => {
+  console.log(`Got ${sender} ${payload}`);
+});
+
 const App = () => {
   const [open, setOpen] = useState(false);
   const [channels, setChannels] = useState([])
@@ -43,6 +47,7 @@ const App = () => {
       setChannels(channelsSorted);
     };
     fetchChannels();
+
   }, []);
 
   return (

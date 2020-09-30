@@ -1,56 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html style="min-width:450px; min-height: 650px;">
   <head>
     <title>Tube Hunt: Community Curated YouTube Recommendations</title>
     <link rel="stylesheet" href="./popup.css">
   </head>
   <body>
-    <div class="container-fluid">
-      <header>
-        <h1>
-          <a target="_blank" href="https://www.reddit.com/r/TubeHunt/" class="popup-title">r/Tube Hunt</a>
-        </h1>
-        <div id="profile-image-container">
-          <img src="" id="profile-image">
-        </div>
-        <!-- class="badge badge-secondary" -->
-      </header>
-      <main>
-        <input id="url" placeholder="Channel Url" name="url">
-        <button type="button" id="submitChannel">Submit</button>
-        <!-- <button type="button" id="darkMode">Dark Mode</button> -->
-        <!-- <button type="button" id="getChannels">Get Channels</button> -->
-      </main>
-      <p id="message"></p>
-      <footer>
-        <ul class="footer-nav">
-          <li class="footer-nav-item">
-            <a href="#">Site</a>
-          </li>
-          <li class="footer-nav-item">
-            <a href="#">Settings</a>
-          </li>
-          <li>
-            <a href="#" class="footer-nav-item">Help</a>
-          </li>
-        </ul>
-      </footer>
-    </div>
-    <button id="quickstart-button">Sign-in with Google</button>
-    <p>
-      Firebase sign-in status: <span id="quickstart-sign-in-status">Unknown</span>
-      <div>Firebase auth <code>currentUser</code> object value:</div>
-      <pre><code id="quickstart-account-details">null</code></pre>
-    </p>
-    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
-    <script src="https://www.gstatic.com/firebasejs/7.21.0/firebase-app.js"></script>
-
-    <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
-    <script src="https://www.gstatic.com/firebasejs/7.21.0/firebase-analytics.js"></script>
-
-    <!-- Add Firebase products that you want to use -->
-    <script src="https://www.gstatic.com/firebasejs/7.21.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.21.0/firebase-firestore.js"></script>
+    <div id=root></div>
 
     <script src="./popup.js"></script>
   </body>
