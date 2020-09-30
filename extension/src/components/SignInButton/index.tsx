@@ -1,47 +1,34 @@
 import React, { useEffect, useState } from 'react';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
+import { AuthSuccessHandler, AuthErrorHandler, AuthResult } from '../authentication';
 
 type AppUser = firebase.User | null;
 
-const SignInButton = (): JSX.Element => {
+type AuthenticationFn = (as: AuthSuccessHandler, ae: AuthErrorHandler) => AuthResult
+
+type SignInButtonProps = {
+  authFn: AuthenticationFn
+}
+
+const SignInButton = ({ authFn }: SignInButtonProps): JSX.Element => {
 
   const [appUser, setAppUser] = useState<AppUser>(null);
 
   useEffect(() => {
-    // Retrieve token using chrome.identity
-    const startAuth = (interactive: boolean) => {
-      chrome.identity.getAuthToken({interactive: interactive}, function(token) {
-        if (chrome.runtime.lastError && !interactive) {
-          console.log('It was not possible to get a token programmatically.');
-        } else if(chrome.runtime.lastError) {
-          console.error(chrome.runtime.lastError.message);
-        } else if (token) {
-          // Authorize Firebase with the OAuth Access Token.
-          const credential = firebase.auth.GoogleAuthProvider.credential(null, token);
+    const successHandler: AuthSuccessHandler = firebaseCred => setAppUser(firebaseCred.user);
+    const errorHandler: AuthErrorHandler = err => console.error(err);
 
-          firebase.auth().signInWithCredential(credential)
-            .then(
-              result => {
-                console.log(`User has signed in: ${result.user}`);
-                setAppUser(result.user);
-              },
-              err => {
-                // The OAuth token might have been invalidated. Lets' remove it from cache.
-                if (err.code === 'auth/invalid-credential') {
-                  chrome.identity.removeCachedAuthToken({token: token}, function() {
-                    startAuth(interactive);
-                  });
-                }
-              });
-        } else {
-          console.error('The OAuth Token was null');
-        }
-      });
-    };
+    const authResult = authFn(successHandler, errorHandler);
 
-    const interactive = true;
-    startAuth(interactive);
+    switch (authResult.status) {
+      case 'AUTH_SUCCESS':
+        setAppUser(authResult.userCredential.user);
+        break;
+      case 'AUTH_FAILURE':
+        console.error(`Error: Error authenticating user: ${authResult.error}`);
+        break;
+    }
   });
 
   return appUser ? (

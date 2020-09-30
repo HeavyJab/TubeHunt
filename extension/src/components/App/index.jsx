@@ -3,6 +3,7 @@ import FeedbackButton from '../FeedbackButton';
 import SignInButton from '../SignInButton';
 import * as firebase from 'firebase/app';
 import 'firebase/firestore';
+import { authToFirebase } from '../authentication';
 
 const submitFeedbackFn = feedbackString =>
   firebase.firestore()
@@ -14,7 +15,7 @@ const submitFeedbackFn = feedbackString =>
 
 const App = () => (
   <div>
-    <SignInButton />
+    <SignInButton authFn={authToFirebase} />
     <FeedbackButton handleFeedbackSubmitFn={submitFeedbackFn} />
   </div>
 );
