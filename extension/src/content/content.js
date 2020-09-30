@@ -12,7 +12,7 @@ root.setAttribute('id', 'channel-section')
 root.setAttribute('style', 'width:100%; display:flex; align-items: center; overflow: auto; flex-direction:column;')
 
 chrome.runtime.onMessage.addListener((payload, sender, sendResponse) => {
-  console.log(`Got ${sender} ${payload}`);
+  console.log(`Got ${sender} ${payload.user}`);
 });
 
 const App = () => {

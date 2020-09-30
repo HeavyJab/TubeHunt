@@ -17,20 +17,16 @@ const auth = firebase.initializeApp(firebaseConfig).auth();
 
 function startAuth(interactive) {
   // Request an OAuth token from the Chrome Identity API.
-  chrome.identity.getAuthToken({interactive: !!interactive}, function(token) {
+  chrome.identity.getAuthToken({interactive: !!interactive}, (token) => {
     if (chrome.runtime.lastError && !interactive) {
       console.log('It was not possible to get a token programmatically.');
     } else if(chrome.runtime.lastError) {
       console.error(chrome.runtime.lastError.message);
     } else if (token) {
-      chrome.tabs.sendMessage(tabs[0].id, {'token': token}, response => {
-        console.log('message sent')
-      });
       // Authorize Firebase with the OAuth Access Token.
       var credential = firebase.auth.GoogleAuthProvider.credential(null, token);
       auth.signInWithCredential(credential).catch(function(error) {
         // The OAuth token might have been invalidated. Lets' remove it from cache.
-
         if (error.code === 'auth/invalid-credential') {
           chrome.identity.removeCachedAuthToken({token: token}, function() {
             startAuth(interactive);
@@ -54,12 +50,20 @@ const SignOut = () => {
     <button onClick={() => auth.signOut()}>Sign Out</button>
   )
 }
- 
+
 const App = () => {
   const [user, setUser] = useState(auth.currentUser)
+
   auth.onAuthStateChanged((FBUser) => {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      chrome.tabs.sendMessage(tabs[0].id, { user: FBUser }, (response) => {
+        // console.log(response.farewell);
+      });
+    });
+    
     setUser(FBUser);
   });
+  
   return user ? (
     <>
       <h1>{user.displayName}</h1>
@@ -75,11 +79,8 @@ const App = () => {
   );
 };
 
-document.addEventListener(
-  "DOMContentLoaded",
-  function () {      
-    ReactDOM.render(<App/>, document.getElementById('root'));
-  }
-);
+document.addEventListener("DOMContentLoaded", () => {
+  ReactDOM.render(<App />, document.getElementById("root"));
+});
 
 
