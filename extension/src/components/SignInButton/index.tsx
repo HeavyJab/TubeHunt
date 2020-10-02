@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
-import { AuthSuccessHandler, AuthErrorHandler, AuthResult, AuthStatus } from '../authentication';
+import React, { useEffect, useState } from 'react';
+import { AuthResult, AuthStatus } from '../authentication';
 
 type AppUser = firebase.UserInfo | null;
 
-type AuthenticationFn = (as: AuthSuccessHandler, ae: AuthErrorHandler) => AuthResult
+type AuthenticationFn = () => Promise<AuthResult>;
 
 type SignInButtonProps = {
   authFn: AuthenticationFn
@@ -16,21 +16,22 @@ const SignInButton = ({ authFn }: SignInButtonProps): JSX.Element => {
   const [appUser, setAppUser] = useState<AppUser>(null);
 
   useEffect(() => {
-    const successHandler: AuthSuccessHandler = firebaseCred => setAppUser(firebaseCred.user);
-    const errorHandler: AuthErrorHandler = err => console.error(err);
+    const doAuth = async (auth: AuthenticationFn) => {
+      const authResult = await auth();
 
-    const authResult = authFn(successHandler, errorHandler);
+      switch (authResult.status) {
+        case AuthStatus.Success:
+          setAppUser(authResult.user);
+          break;
+        case AuthStatus.Failure:
+          console.log(
+            `Error: Unable to authenticate user: ${authResult.error.message}, ${authResult.error.code}`
+          );
+          break;
+      }
+    };
 
-    switch (authResult.status) {
-      case AuthStatus.Success:
-        setAppUser(authResult.user);
-        break;
-      case AuthStatus.Failure:
-        console.log(
-          `Error: Unable to authenticate user: ${authResult.error.message}, ${authResult.error.code}`
-        );
-        break;
-    }
+    doAuth(authFn);
   }, []);
 
   return appUser ? (

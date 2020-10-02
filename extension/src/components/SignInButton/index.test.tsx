@@ -2,16 +2,17 @@ import '@testing-library/jest-dom';
 import { render, waitFor } from '@testing-library/react';
 import React from 'react';
 import {
-  AuthErrorHandler,
   AuthResult,
-  AuthStatus, AuthSuccessHandler,
-  FailureAuthResult, SuccessAuthResult
+  AuthStatus,
+  FailureAuthResult,
+  SuccessAuthResult
 } from '../authentication';
 import SignInButton from './index';
 
 describe('SignInButton', () => {
-  const buildMockAuthFn = (mockResult: AuthResult) => (jest
-    .fn<AuthResult, [AuthSuccessHandler, AuthErrorHandler]>((_as, _ae) => (mockResult)));
+  const buildMockAuthFn = (mockResult: AuthResult) => (
+    jest.fn<Promise<AuthResult>, []>(() => (Promise.resolve(mockResult)))
+  );
 
   it('displays sign-in button by default', () => {
     const testResult: FailureAuthResult = {

@@ -1,11 +1,8 @@
 import * as firebase from 'firebase/app';
 /*
 Uses the chrome.identity api to retrieve and user access token,
-which can then be used to sign the user into our application.
+which can then be used to sign the user into our firebase application.
 */
-
-export type AuthSuccessHandler = (firebaseCredential: firebase.auth.UserCredential) => void
-export type AuthErrorHandler = (err: firebase.auth.UserCredential) => void
 
 interface BaseAuthResult {
   status: AuthStatus;
@@ -38,46 +35,37 @@ const createAuthFailure = (message: string, code?: string): AuthResult => ({
   error: { message, code }
 });
 
-export const authToFirebase = (
-  onSuccessFn: AuthSuccessHandler,
-  onErrorFn: AuthErrorHandler
-): AuthResult => {
+export const authToFirebase = (): Promise<AuthResult> => {
   const interactive = true;
 
-  let result: AuthResult = createAuthFailure('An error occurred signing you in!'); // Default to failure
-
-  try {
+  return new Promise((resolve, reject) => {
     chrome.identity.getAuthToken({interactive: interactive}, (token: string) => {
       if(token == undefined) {
-        result = createAuthFailure('Error retrieving your token from Chrome.');
+        reject(createAuthFailure('Error retrieving your token from Chrome.'));
       } else if (chrome.runtime.lastError && !interactive) {
-        result = createAuthFailure('It was not possible to get a token programmatically.');
+        reject(createAuthFailure('It was not possible to get a token programmatically.'));
       } else if(chrome.runtime.lastError) {
-        result = createAuthFailure(chrome.runtime.lastError.message);
+        reject(createAuthFailure(chrome.runtime.lastError.message));
       } else if (token) {
         // Authorize Firebase with the OAuth Access Token.
         const credential = firebase.auth.GoogleAuthProvider.credential(null, token);
 
         return firebase.auth().signInWithCredential(credential)
           .then(
-            successCredential => createAuthSuccess(successCredential),
+            successCredential => resolve(createAuthSuccess(successCredential)),
             err => {
               // The OAuth token might have been invalidated. Lets' remove it from cache.
               if (err.code === 'auth/invalid-credential') {
                 chrome.identity.removeCachedAuthToken({token: token}, function() {
-                  result = authToFirebase(onSuccessFn, onErrorFn); // Retry on errors
+                  return authToFirebase(); // Retry on errors
                 });
               } else {
-                result = createAuthFailure(err);
+                reject(createAuthFailure(err));
               }
             });
       } else {
-        return createAuthFailure('The OAuth Token was null');
+        reject(createAuthFailure('The OAuth Token was null'));
       }
     });
-  } catch (error) {
-    result = createAuthFailure('It was not possible to get a token programmatically.');
-  }
-
-  return result;
+  });
 };
