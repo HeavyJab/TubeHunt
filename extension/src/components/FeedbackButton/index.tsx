@@ -23,6 +23,7 @@ const FeedbackButton = ({
 
   const handleFeedbackSubmit = async (str: string): Promise<void> => {
     try {
+      //TODO: useContext for signed in user so we don't use global firebase here.
       const feedbackProviderUser = firebase.auth().currentUser ?
         firebase.auth().currentUser.uid : 'non-logged-in-user';
 
