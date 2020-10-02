@@ -1,3 +1,4 @@
+import * as firebase from 'firebase/app';
 /*
 Uses the chrome.identity api to retrieve and user access token,
 which can then be used to sign the user into our application.
@@ -7,28 +8,33 @@ export type AuthSuccessHandler = (firebaseCredential: firebase.auth.UserCredenti
 export type AuthErrorHandler = (err: firebase.auth.UserCredential) => void
 
 interface BaseAuthResult {
-  status: string;
+  status: AuthStatus;
+}
+
+export enum AuthStatus {
+  Success,
+  Failure
 }
 
 export interface SuccessAuthResult extends BaseAuthResult {
-  status: 'AUTH_SUCCESS';
-  userCredential: firebase.auth.UserCredential
+  status: AuthStatus.Success;
+  user: firebase.UserInfo | null;
 }
 
 export interface FailureAuthResult extends BaseAuthResult {
-  status: 'AUTH_FAILURE';
+  status: AuthStatus.Failure;
   error: { code?: string; message: string }
 }
 
 export type AuthResult = SuccessAuthResult | FailureAuthResult
 
 const createAuthSuccess = (userCred: firebase.auth.UserCredential): AuthResult => ({
-  status: 'AUTH_SUCCESS',
-  userCredential: userCred
+  status: AuthStatus.Success,
+  user: userCred.user as firebase.UserInfo,
 });
 
 const createAuthFailure = (message: string, code?: string): AuthResult => ({
-  status: 'AUTH_FAILURE',
+  status: AuthStatus.Failure,
   error: { message, code }
 });
 
