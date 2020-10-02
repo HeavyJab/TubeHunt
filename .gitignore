@@ -7,3 +7,5 @@ build
 extension/*-bundle.js
 extension/.cache
 extension/dist
+extension/__mocks__
+
