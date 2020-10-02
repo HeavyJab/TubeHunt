@@ -5,9 +5,9 @@ import * as firebase from 'firebase/app';
 import 'firebase/firestore';
 import { authToFirebase } from '../authentication';
 
-const submitFeedbackFn = feedbackString =>
+const submitFeedbackFn = (userUID, feedbackString) =>
   firebase.firestore()
-    .doc('foo/bar')
+    .doc(`feedback/${userUID}`)
     .set({
       feedbackMessage: feedbackString,
       submissionTime: new firebase.firestore.Timestamp.now()

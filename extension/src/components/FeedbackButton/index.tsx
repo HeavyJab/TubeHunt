@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import SubmittableTextInput from '../SubmittableTextInput';
 import LoveFeedback from './loveFeedback.svg';
+import * as firebase from 'firebase/app';
 
 // TODO: credit creator from flaticon.com
 /*
@@ -12,7 +13,7 @@ import LoveFeedback from './loveFeedback.svg';
 */
 
 export type FeedbackButtonProps = {
-  handleFeedbackSubmitFn: (s: string) => Promise<void>
+  handleFeedbackSubmitFn: (userUID: string, s: string) => Promise<void>
 }
 
 const FeedbackButton = ({
@@ -22,7 +23,10 @@ const FeedbackButton = ({
 
   const handleFeedbackSubmit = async (str: string): Promise<void> => {
     try {
-      await handleFeedbackSubmitFn(str);
+      const feedbackProviderUser = firebase.auth().currentUser ?
+        firebase.auth().currentUser.uid : 'non-logged-in-user';
+
+      await handleFeedbackSubmitFn(feedbackProviderUser, str);
       console.log(`Received dummy feedback!: ${str}`);
 
       setShowFeedbackInput(false);
