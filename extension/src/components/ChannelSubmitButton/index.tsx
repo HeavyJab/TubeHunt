@@ -23,7 +23,14 @@ const ChannelSubmitButton = ({
   useEffect(() => {
     chrome.tabs.query(
       { active: true, currentWindow: true },
-      tabs => setCurrentTabUrl(tabs[0].url)
+      tabs => {
+        const url = tabs[0].url;
+        const isYoutubeChannelPage = (str: string) =>
+          str.match(/https:\/\/www.youtube\.com\/channel\/.*$/);
+        if(isYoutubeChannelPage(url)) {
+          setCurrentTabUrl(url);
+        }
+      }
     );
   }, []);
 
