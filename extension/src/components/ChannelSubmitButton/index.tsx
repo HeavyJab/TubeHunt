@@ -9,7 +9,7 @@ export interface ChannelSubmitButtonProps {
 const ChannelSubmitButton = ({
   channelSubmitFn
 }: ChannelSubmitButtonProps): JSX.Element => {
-  const [currentTabUrl, setCurrentTabUrl] = useState<string>('xxx');
+  const [currentTabUrl, setCurrentTabUrl] = useState<string>('');
 
   const handleChannelSubmit = async (str: string): Promise<void> => {
     try {
@@ -21,22 +21,19 @@ const ChannelSubmitButton = ({
   };
 
   useEffect(() => {
-    chrome.tabs.query({active: true, currentWindow: true}, tabs => {
-      console.log('url:', tabs);
-      const url = tabs[0].url;
-      console.log('url:', url);
-      setCurrentTabUrl(url);
-    });
+    chrome.tabs.query(
+      { active: true, currentWindow: true },
+      tabs => setCurrentTabUrl(tabs[0].url)
+    );
   }, []);
 
   return (
     <div>
-      <button onClick={() => setCurrentTabUrl(new Date().getMilliseconds().toString())}>click</button>
-      <p>{currentTabUrl}</p>
       <SubmittableTextInput
         labelText={'Channel URL'}
         submitFn={handleChannelSubmit}
         overrideValue={currentTabUrl}
+        overrideChangeHandler={setCurrentTabUrl}
       />
     </div>
   );
