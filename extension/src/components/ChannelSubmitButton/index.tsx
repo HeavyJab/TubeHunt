@@ -26,7 +26,7 @@ const ChannelSubmitButton = ({
       tabs => {
         const url = tabs[0].url;
         const isYoutubeChannelPage = (str: string) =>
-          str.match(/https:\/\/www.youtube\.com\/channel\/.*$/);
+          str.match(/https:\/\/www\.youtube\.com\/(channel|c)\/.*$/);
         if(isYoutubeChannelPage(url)) {
           setCurrentTabUrl(url);
         }
