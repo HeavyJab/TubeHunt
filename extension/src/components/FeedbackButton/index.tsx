@@ -24,11 +24,12 @@ const FeedbackButton = ({
   const handleFeedbackSubmit = async (str: string): Promise<void> => {
     try {
       //TODO: useContext for signed in user so we don't use global firebase here.
+      // This still causes a failing test
       const feedbackProviderUser = firebase.auth().currentUser ?
         firebase.auth().currentUser.uid : 'non-logged-in-user';
 
       await handleFeedbackSubmitFn(feedbackProviderUser, str);
-      console.log(`Received dummy feedback!: ${str}`);
+      console.log(`Received feedback!: ${str}`);
 
       setShowFeedbackInput(false);
     } catch (error) {

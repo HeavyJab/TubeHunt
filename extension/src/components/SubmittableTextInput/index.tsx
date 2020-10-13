@@ -1,27 +1,45 @@
 import React, { useState } from 'react';
 
-export type SubmittableTextInputProps = {
+export type SubmittableTextInputProps =
+  StandardSubmittableTextProps | OverridableSubmittableTextProps
+
+type StandardSubmittableTextProps = {
   labelText: string;
-  submitFn: (input: string) => Promise<void>;
+  submitFn: (newValue: string) => Promise<void>;
 }
 
-const SubmittableTextInput = ({
-  labelText,
-  submitFn
-}: SubmittableTextInputProps): JSX.Element => {
+type OverridableSubmittableTextProps = {
+  overrideValue: string;
+  overrideChangeHandler: (newValue: string) => void;
+} & StandardSubmittableTextProps
 
-  const [textInput, setTextInput] = useState('');
+const SubmittableTextInput = (props: SubmittableTextInputProps): JSX.Element => {
+
+  const isOverride = (props): props is OverridableSubmittableTextProps =>
+    'overrideValue' in props;
+
+  const [textInput, setTextInput] = useState<string>(() => (
+    isOverride(props) ? props.overrideValue : ''
+  ));
 
   return (
     <div>
-      <label htmlFor={'primaryTextField'}>{labelText}</label>
+      <label htmlFor={'primaryTextField'}>{props.labelText}</label>
       <input
         id={'primaryTextField'}
         type='text'
-        value={textInput}
-        onChange={e => setTextInput(e.target.value)}
+        value={isOverride(props) ? props.overrideValue : textInput}
+        onChange={e => {
+          setTextInput(e.target.value);
+          if('overrideChangeHandler' in props) {
+            props.overrideChangeHandler(e.target.value);
+          }
+        }}
       />
-      <button onClick={() => submitFn(textInput)}>Submit</button>
+      <button onClick={() =>
+        isOverride(props) ?
+          props.submitFn(props.overrideValue) :
+          props.submitFn(textInput)}>Submit</button>
     </div>
   );
 };

@@ -41,6 +41,7 @@
     "permissions":[
         "https://us-central1-tube-hunt.cloudfunctions.net/app/api/*",
         {"web_accessible_resources": ["channel.css"]},
-        "identity"
+        "identity",
+        "tabs"
     ]
 }
