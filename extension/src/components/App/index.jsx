@@ -48,10 +48,22 @@ const submitChannel = newChannelUrl => {
   });
 };
 
+const getCurrentChromeTabUrl = (callback) => {
+  chrome.tabs.query(
+    { active: true, currentWindow: true },
+    tabs => {
+      const currentTabUrl = tabs[0].url;
+      callback(currentTabUrl);
+    }
+  );
+};
+
 const App = () => (
   <div>
     <SignInButton authFn={authToFirebase} />
-    <ChannelSubmitButton channelSubmitFn={submitChannel}/>
+    <ChannelSubmitButton
+      getCurrentTabUrlFn={getCurrentChromeTabUrl}
+      channelSubmitFn={submitChannel}/>
     <FeedbackButton handleFeedbackSubmitFn={submitFeedbackFn} />
   </div>
 );

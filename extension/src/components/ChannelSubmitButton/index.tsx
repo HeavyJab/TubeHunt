@@ -4,10 +4,12 @@ import { useEffect, useState } from 'react';
 
 export interface ChannelSubmitButtonProps {
   channelSubmitFn(s: string): Promise<void>;
+  getCurrentTabUrlFn(callback: (currentUrl: string) => void): void;
 }
 
 const ChannelSubmitButton = ({
-  channelSubmitFn
+  channelSubmitFn,
+  getCurrentTabUrlFn
 }: ChannelSubmitButtonProps): JSX.Element => {
   const [currentTabUrl, setCurrentTabUrl] = useState<string>('');
 
@@ -16,22 +18,19 @@ const ChannelSubmitButton = ({
       console.log(`INFO: Submitting channel: ${str}`);
       await channelSubmitFn(str);
     } catch (err) {
-      console.log(`ERROR: Something went wrong submitting channel${str}: ${err}`);
+      console.log(`ERROR: Something went wrong submitting channel ${str}: ${err}`);
     }
   };
 
   useEffect(() => {
-    chrome.tabs.query(
-      { active: true, currentWindow: true },
-      tabs => {
-        const url = tabs[0].url;
-        const isYoutubeChannelPage = (str: string) =>
-          str.match(/https:\/\/www\.youtube\.com\/(channel|c)\/.*$/);
-        if(isYoutubeChannelPage(url)) {
-          setCurrentTabUrl(url);
-        }
+    getCurrentTabUrlFn((currentTabURL: string) => {
+      const isYoutubeChannelPage = (str: string) =>
+        str.match(/https:\/\/www\.youtube\.com\/(channel|c)\/.*$/);
+
+      if (currentTabURL && isYoutubeChannelPage(currentTabURL)) {
+        setCurrentTabUrl(currentTabURL);
       }
-    );
+    });
   }, []);
 
   return (
